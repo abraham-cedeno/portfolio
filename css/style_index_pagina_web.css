@@ -1,0 +1,936 @@
+
+/***********************************************NAV BAR*********************************/
+.navbar {
+  position: fixed;
+  z-index: 1;
+  top: 1rem;
+}
+
+.navbar-brand {
+  color: black !important;
+    font-family: 'Montserrat', sans-serif;
+    font-weight:bold;
+}
+
+.nav-link {
+  color: rgba(0, 0, 0, 255) !important;
+}
+
+
+#item-5{
+  position: fixed;
+  right: 3rem;
+  top: 1.5rem;
+}
+
+#item-4{
+  position: fixed;
+  right: 13rem;
+  top: 1.5rem;
+}
+
+#item-3{
+  position: fixed;
+  right: 23rem;
+  top: 1.5rem;
+}
+
+#item-2{
+  position: fixed;
+  right: 33rem;
+  top: 1.5rem;
+}
+
+#item-1{
+  position: fixed;
+  right: 43rem;
+  top: 1.5rem;
+}
+
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 255)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
+}
+
+.navbar-toggler {
+  border-color: rgba(0, 0, 0, 255) !important;
+  position: fixed;
+  right: 3rem;
+}
+
+.ml-auto {
+  text-align: center !important;
+}
+
+
+
+
+
+/***********************************************INICIO WHATSAPP*********************************/
+
+.icon-bar {
+  position: fixed;
+  z-index: 1;
+  right: 3rem;
+  bottom: 3rem;
+}
+
+
+.escribeme{
+display: inline-block;
+  color:black;
+}
+
+.whatsapp{
+    color:black;
+}
+
+.whatsapp:hover{
+    color:#2e68b0;
+}
+
+.escribeme:hover{
+  color:#2e68b0;
+}
+
+/***********************************************FINAL WHATSAPP*********************************/
+
+
+.bottom-container
+{
+  position:relative;
+  padding-top:50px;
+  background-color: #8DBFFC;
+  padding-bottom:100px;
+  padding-right:150px;
+  padding-left:150px;
+}
+
+.section6{
+  background-color: #8DBFFC;
+}
+
+
+
+
+.experiencia-foot{
+  color: white;
+  font-family: 'Merriweather', serif;
+  text-align:justify;
+}
+
+.footer-link{
+  color:white !important;
+}
+
+
+.pie{
+  position:relative;
+  color:#EAF6F6;
+  font-size:0.7rem;
+  margin: 0px auto 0px;
+  top:50px;
+}
+
+.mi-contacto{
+  text-align: center;
+  padding-top:25px;
+}
+
+.redes-sociales{
+  text-align: center;
+    padding-top:25px;
+}
+
+.footer{
+  color:#40514e;
+/* color: white; */
+
+}
+
+a:hover {
+  color: #EAF6F6;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@font-face { 
+  font-family:Coolvetica_b;
+  src:url(https://andris.gauracs.com/fonts/CoolveticaRg-Regular.eot?#iefix) format("embedded-opentype"),url(https://andris.gauracs.com/fonts/CoolveticaRg-Regular.woff) format("woff"),url(https://andris.gauracs.com/fonts/CoolveticaRg-Regular.ttf) format("truetype"),url(https://andris.gauracs.com/fonts/CoolveticaRg-Regular.svg#CoolveticaRg-Regular) format("svg");
+  font-weight:400;
+  font-style:normal;
+} 
+.gbkAxW .inner { 
+    padding-top: 196.5px; 
+    width: 100%; 
+    box-sizing: border-box; 
+    padding-left: 40px; 
+    padding-right: 40px;
+} 
+
+.project_page { 
+    transition: opacity 0.5s ease 0s; 
+    opacity: 0; 
+    position: fixed; 
+    width: 100%;
+} 
+
+.project_page.ready { 
+    opacity: 1; 
+    position: relative; 
+    width: 100%;
+} 
+
+@media all{ 
+  body { 
+    margin: 0; 
+    padding: 0; 
+    font-family: Coolvetica_b,Helvetica,sans-serif;
+  } 
+}     
+
+body { 
+    overflow-y: scroll;
+} 
+
+.desc_box  { 
+    position: absolute; 
+    left: calc(50% - 230px); 
+    margin: auto; 
+    top: 60px; 
+    text-decoration: none; 
+    color: rgb(66, 66, 66); 
+    width: 420px; 
+    background-color: #D9E9FD; 
+    padding: 20px;
+    max-width: 100%;
+} 
+
+.desc_box2  { 
+  position: absolute; 
+  left: calc(50% - 270px); 
+  margin: auto; 
+  top: 60px; 
+  text-decoration: none; 
+  color: rgb(66, 66, 66); 
+  width: 620px; 
+  background-color: #D9E9FD; 
+  padding: 20px;
+  max-width: 100%;
+} 
+
+.title  { 
+    font-size: 40px; 
+    font-family: Helvetica, sans-serif; 
+    font-weight: 800; 
+    letter-spacing: -2px;
+} 
+
+.subtitle  { 
+    font-size: 24px; 
+    font-weight: 800; 
+    font-family: Helvetica, sans-serif;
+} 
+
+.tags  { 
+    font-size: 20px; 
+    font-family: Helvetica, sans-serif; 
+    font-weight: 500; 
+    color: rgb(148, 148, 148);
+} 
+
+.blue  { 
+    color: rgb(99, 178, 255);
+} 
+
+
+
+
+
+
+@font-face { 
+  font-family:Coolvetica_b;
+  src:url(https://andris.gauracs.com/fonts/CoolveticaRg-Regular.eot?#iefix) format("embedded-opentype"),url(https://andris.gauracs.com/fonts/CoolveticaRg-Regular.woff) format("woff"),url(https://andris.gauracs.com/fonts/CoolveticaRg-Regular.ttf) format("truetype"),url(https://andris.gauracs.com/fonts/CoolveticaRg-Regular.svg#CoolveticaRg-Regular) format("svg");
+  font-weight:400;
+  font-style:normal;
+} 
+.gbkAxW .inner { 
+    padding-top: 196.5px; 
+    width: 100%; 
+    box-sizing: border-box; 
+    padding-left: 40px; 
+    padding-right: 40px;
+} 
+
+.project_page { 
+    transition: opacity 0.5s ease 0s; 
+    opacity: 0; 
+    position: fixed; 
+    width: 100%;
+} 
+
+.project_page.ready { 
+    opacity: 1; 
+    position: relative; 
+    width: 100%;
+} 
+
+@media all{ 
+  body { 
+    background-color: #D9E9FD;
+    margin: 0; 
+    padding: 0; 
+    font-family: Coolvetica_b,Helvetica,sans-serif;
+  } 
+}     
+
+body { 
+    overflow-y: scroll;
+} 
+
+.content_area  { 
+    max-width: 940px; 
+    margin: 0px auto; 
+    width: 100%; 
+    padding: 0px 40px; 
+    box-sizing: border-box; 
+    position: relative;
+} 
+
+.gErkcN { 
+    display: flex; 
+    -webkit-box-pack: justify; 
+    justify-content: space-between;
+} 
+
+.jBhoOa { 
+    font-family: Helvetica, sans-serif; 
+    font-weight: normal; 
+    line-height: 32px; 
+    color: #40514e; 
+    font-size: 20px; 
+    opacity: 0; 
+    pointer-events: none; 
+    transition: opacity 0.4s linear 0s;
+} 
+
+.jBhoOa.visible { 
+    opacity: 1; 
+    pointer-events: initial;
+} 
+
+.cWCfcE { 
+    margin-top: 50px; 
+    flex: 0 1 500px; 
+    position: relative;
+} 
+
+.cWCfcE:after { 
+    z-index: 1; 
+    content: ""; 
+    width: 400px; 
+    height: 400px; 
+    border-radius: 50%; 
+    position: absolute; 
+    top: -15%; 
+    left: -15%; 
+    background-color: rgb(194, 205, 87); 
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s; 
+    transform-origin: center bottom; 
+    transform: scale(0);
+} 
+
+.cWCfcE.ready:after { 
+    transform: scale(1);
+} 
+
+.gBBvKU { 
+    margin-top: 50px; 
+    flex: 0 1 300px; 
+    position: relative;
+} 
+
+.gBBvKU:after { 
+    z-index: 4; 
+    content: ""; 
+    width: 300px; 
+    height: 300px; 
+    border-radius: 50%; 
+    position: absolute; 
+    top: 10%; 
+    right: 0px; 
+    background-color: rgb(194, 205, 87); 
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s; 
+    transform: scale(0); 
+    transform-origin: center top;
+} 
+
+.gBBvKU.ready:after { 
+    transform: scale(1);
+} 
+
+.jBhoOa p  { 
+    margin: 50px auto; 
+    text-align: justify;
+} 
+
+.jBhoOa .video_section  { 
+    display: flex; 
+    flex-wrap: wrap;
+} 
+
+.jBhoOa .page_footer  { 
+    width: 100%; 
+    margin: 20px 0px 100px; 
+    display: flex; 
+    padding-top: 20px; 
+    border-top: 1px solid rgba(99, 178, 255, 0.35); 
+    font-family: Coolvetica_b, sans-serif;
+} 
+
+.cWCfcE img  { 
+    width: 100%; 
+    z-index: 2; 
+    position: relative; 
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s; 
+    transform: scale(0) rotate(-45deg);
+} 
+
+.cWCfcE.ready img  { 
+    transform: scale(1) rotate(0deg);
+} 
+
+.gBBvKU img  { 
+    width: 100%; 
+    z-index: 5; 
+    position: relative; 
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.4s; 
+    transform: scale(0) rotate(45deg);
+} 
+
+.gBBvKU.ready img  { 
+    transform: scale(1) rotate(0deg);
+} 
+
+.jBhoOa a  { 
+    color: rgb(99, 178, 255); 
+    transition: opacity 0.2s ease 0s;
+} 
+
+.jBhoOa a.project_url  { 
+    padding-left: 10px;
+} 
+
+.jBhoOa a:hover  { 
+    opacity: 0.8;
+} 
+
+.jBhoOa .video_section .video  { 
+    flex: 0 0 100%;
+} 
+
+.jBhoOa .video_section .text  { 
+    flex: 0 0 100%;
+} 
+
+.jBhoOa .page_footer .left-side  { 
+    flex: 0 1 50%; 
+    text-align: left; 
+    color: rgb(99, 178, 255); 
+    font-weight: bold; 
+    letter-spacing: 1px;
+} 
+
+.jBhoOa .page_footer .right-side  { 
+    text-align: right; 
+    flex: 0 1 50%;
+} 
+
+.jBhoOa .video_section .video video  { 
+    width: 100%; 
+    height: auto;
+} 
+
+.jBhoOa .page_footer .site_link  { 
+    cursor: pointer; 
+    display: inline-block; 
+    transition: all 0.2s ease 0s; 
+    transform: scale(1);
+} 
+
+.jBhoOa .page_footer .site_link:hover  { 
+    transform: scale(1.1);
+} 
+
+.jBhoOa .page_footer .App-logo  { 
+    cursor: pointer; 
+    display: inline-block; 
+    transition: all 0.2s ease 0s; 
+    transform: scale(1);
+} 
+
+.jBhoOa .page_footer .App-logo:hover  { 
+    transform: scale(1.1);
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@font-face { 
+  font-family:Coolvetica_b;
+  src:url(https://andris.gauracs.com/fonts/CoolveticaRg-Regular.eot?#iefix) format("embedded-opentype"),url(https://andris.gauracs.com/fonts/CoolveticaRg-Regular.woff) format("woff"),url(https://andris.gauracs.com/fonts/CoolveticaRg-Regular.ttf) format("truetype"),url(https://andris.gauracs.com/fonts/CoolveticaRg-Regular.svg#CoolveticaRg-Regular) format("svg");
+  font-weight:400;
+  font-style:normal;
+} 
+.jKObcr .projects .line-1 { 
+    height: 87px;
+} 
+
+.jKObcr .projects .titleWrapper { 
+    position: relative; 
+    overflow: hidden; 
+    height: 180px;
+} 
+
+.jKObcr .projects { 
+    margin-bottom: 40px;
+} 
+
+.jKObcr { 
+    color: rgb(66, 66, 66);
+} 
+
+.hKoQjM { 
+    position: relative; 
+    z-index: 2; 
+    top: 0px; 
+    width: 950px; 
+    margin: 0px auto; 
+    padding-top: 80px; 
+    opacity: 1; 
+    transition: opacity 2s ease 0s;
+} 
+
+.Home { 
+    opacity: 0; 
+    position: fixed;
+} 
+
+.Home.ready { 
+    opacity: 1; 
+    position: initial; 
+    overflow-x: hidden;
+} 
+
+@media all{ 
+  body { 
+    margin: 0; 
+    padding: 0; 
+    font-family: Coolvetica_b,Helvetica,sans-serif;
+  } 
+}     
+
+body { 
+    overflow-y: scroll;
+} 
+
+.blue_line  { 
+    content: ""; 
+    width: 52px; 
+    height: 5px; 
+    background: rgb(99, 178, 255); 
+    display: block; 
+    margin-top: 20px;
+} 
+
+.blue_line2  { 
+  content: ""; 
+  width: 39.5rem; 
+  height: 2px; 
+  background: rgb(99, 178, 255); 
+  display: block; 
+  margin-top: 7px;
+  max-width: 100%;
+} 
+
+.blue_line3  { 
+  content: ""; 
+  width: 43rem; 
+  height: 2px; 
+  background: rgb(99, 178, 255); 
+  display: block; 
+  margin-top: 7px;
+  max-width: 100%;
+} 
+
+.blue_line4  { 
+  content: ""; 
+  width: 29.7rem; 
+  height: 2px; 
+  background: rgb(99, 178, 255); 
+  display: block; 
+  margin-top: 7px;
+  max-width: 100%;
+} 
+
+.blue_line5  { 
+  content: ""; 
+  width: 32.5rem; 
+  height: 2px; 
+  background: rgb(99, 178, 255); 
+  display: block; 
+  margin-top: 7px;
+  max-width: 100%;
+} 
+
+
+.blue_line6  { 
+  content: ""; 
+  width: 41.5rem; 
+  height: 2px; 
+  background: rgb(99, 178, 255); 
+  display: block; 
+  margin-top: 7px;
+  max-width: 100%;
+} 
+
+.blue_line7  { 
+  content: ""; 
+  width: 38.5rem; 
+  height: 2px; 
+  background: rgb(99, 178, 255); 
+  display: block; 
+  margin-top: 7px;
+  max-width: 100%;
+} 
+
+.blue_line8  { 
+  content: ""; 
+  width: 16.0rem; 
+  height: 2px; 
+  background: rgb(99, 178, 255); 
+  display: block; 
+  margin-top: 7px;
+  max-width: 100%;
+} 
+
+
+.blue_line9  { 
+  content: ""; 
+  width: 28.5rem; 
+  height: 2px; 
+  background: rgb(99, 178, 255); 
+  display: block; 
+  margin-top: 7px;
+  max-width: 100%;
+} 
+
+
+
+
+
+
+.blue_line10  { 
+  content: ""; 
+  width: 24.0rem; 
+  height: 2px; 
+  background: rgb(99, 178, 255); 
+  display: block; 
+  margin-top: 7px;
+  max-width: 100%;
+} 
+
+
+
+
+
+
+
+
+
+.blue_line11  { 
+  content: ""; 
+  width: 45.5rem; 
+  height: 2px; 
+  background: rgb(99, 178, 255); 
+  display: block; 
+  margin-top: 7px;
+  max-width: 100%;
+} 
+
+
+
+
+
+
+
+.blue_line12  { 
+  content: ""; 
+  width: 26.5rem; 
+  height: 2px; 
+  background: rgb(99, 178, 255); 
+  display: block; 
+  margin-top: 7px;
+  max-width: 100%;
+} 
+
+
+
+
+
+
+
+
+
+
+
+.blue_line13  { 
+  content: ""; 
+  width: 42.0rem; 
+  height: 2px; 
+  background: rgb(99, 178, 255); 
+  display: block; 
+  margin-top: 7px;
+  max-width: 100%;
+} 
+
+
+
+
+.blue_line14  { 
+  content: ""; 
+  width: 38.0rem; 
+  height: 2px; 
+  background: rgb(99, 178, 255); 
+  display: block; 
+  margin-top: 7px;
+  max-width: 100%;
+} 
+
+
+
+
+
+
+
+
+
+
+.blue_line15  { 
+  content: ""; 
+  width: 50.0rem; 
+  height: 2px; 
+  background: rgb(99, 178, 255); 
+  display: block; 
+  margin-top: 7px;
+  max-width: 100%;
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.blue_line16  { 
+  content: ""; 
+  width: 54.0rem; 
+  height: 2px; 
+  background: rgb(99, 178, 255); 
+  display: block; 
+  margin-top: 7px;
+  max-width: 100%;
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.title2 {
+  margin-top: 3rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.video {
+  text-align: center;
+}
+
+.bikes1 {
+  padding-bottom: 3rem;
+}
+
+
+.bikes2 {
+  padding-bottom: 3rem;
+}
+
+.subtitulo {
+  padding-top: 2rem;
+}
+
+
+.data_context {
+
+}
+
+
+ul {list-style: none
+}
+
+li.data::before {content: "•"; 
+  color: rgb(99, 178, 255); 
+  font-size:35px;
+  position:relative;
+  right:0.2rem;
+  top:0.35rem;
+}
+
+
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media(max-width: 580px) {
+.content_area{
+  padding-top:60px;}
+
+  .desc_box2{
+    left: 0px;
+  }
+  div.title{font-size: 35px !important;
+  }
+}
+
+
+@media screen and (min-width:670px) and (max-width: 1344px) {
+  div.bottom-container{
+    padding-left: 100px;
+    padding-right:100px;
+    padding-top:50px;
+    padding-bottom:50px;
+  }
+}
+
+@media screen and (min-width:100px) and (max-width: 670px) {
+    
+  div.bottom-container{
+    padding-left: 50px;
+    padding-right:50px;
+    padding-top:50px;
+    padding-bottom:50px;
+  }
+}
+
+
+video{
+  max-width:100%;
+}
+
+
+
+@media screen and (min-width:100px) and (max-width: 455px) {
+
+.project_url{
+ font-size:15px;
+}
+}

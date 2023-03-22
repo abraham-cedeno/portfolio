@@ -1,0 +1,1264 @@
+body {
+  margin: 0;
+  text-align: center;
+  font-family: 'Merriweather', serif;
+  color: #40514E;
+  background-color: #EEF1FF;
+}
+
+.btn {
+  background: #11cdd4;
+  background-image: -webkit-linear-gradient(top, #B1B2FF, #9698FF);
+  background-image: -moz-linear-gradient(top, #B1B2FF, #9698FF);
+  background-image: -ms-linear-gradient(top, #B1B2FF, #9698FF);
+  background-image: -o-linear-gradient(top, #B1B2FF, #9698FF);
+  background-image: linear-gradient(to bottom, #B1B2FF, #9698FF);
+  -webkit-border-radius: 8;
+  -moz-border-radius: 8;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #D4A3FF;
+  background-image: -webkit-linear-gradient(top, #D4A3FF, #AA95E8);
+  background-image: -moz-linear-gradient(top, #D4A3FF, #AA95E8);
+  background-image: -ms-linear-gradient(top, #D4A3FF, #AA95E8);
+  background-image: -o-linear-gradient(top, #D4A3FF, #AA95E8);
+  background-image: linear-gradient(to bottom, #D4A3FF, #AA95E8);
+  text-decoration: none;
+}
+
+h1 {
+  line-height: 1;
+  color: #B1B2FF;
+  margin: 50px auto 0 auto;
+  font-family: 'Sacramento', cursive;
+  font-size: 5.62rem;
+  font-weight: bold;
+}
+
+h2 {
+  color: #B1B2FF;
+  font-weight: normal;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.5rem;
+  margin: 33.2px 0;
+}
+
+h3 {
+  color: #9698FF;
+  font-family: 'Montserrat', sans-serif;
+}
+
+h4 {
+  color: #9698FF;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+}
+
+h5 {
+  color: #9698FF;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.0rem;
+}
+
+p {
+  line-height: 2;
+}
+
+a {
+  color: #9698FF;
+}
+
+a:hover {
+  color: #EEF1FF;
+}
+
+hr {
+  margin: 100px auto 100px auto;
+  height: 0;
+  border-style: dotted none none;
+  width: 4%;
+  border-color: #EEF1FF;
+  border-width: 6px;
+}
+
+/***********************************************NAV BAR*********************************/
+.navbar {
+  padding-left: 125px;
+  /*  padding-top: 50px; */
+  padding-top:20px;
+  padding-bottom:20px;
+  padding-right: 125px;
+  background-color: #EEF1FF;
+}
+
+.navbar-brand {
+  color: #B1B2FF !important;
+    font-family: 'Montserrat', sans-serif;
+    font-weight:bold;
+}
+
+.nav-link {
+  color: rgba(177, 178, 255, 1) !important;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(177, 178, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
+}
+
+.navbar-toggler {
+  border-color: rgba(177, 178, 255, 1) !important;
+}
+
+.ml-auto {
+  text-align: center !important;
+}
+
+/*********************************************INICIO SECCION 1****************/
+.container-fluid {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.top-container {
+  background-color: #EEF1FF;
+  position: relative;
+  padding-top: 0px;
+  padding-left: 125px;
+  padding-bottom: 85px;
+  padding-right: 150px;
+}
+
+.quien-soy {
+  padding-top: 100px;
+}
+
+.mountain {
+  border-radius: 30px;
+}
+
+/*********************************************FINAL SECCIÓN 1****************+/
+
+  /***********************************************Seccion 2*********************************/
+.middle-container {
+  position: relative;
+  background-color: #fff;
+  padding-left: 125px;
+  padding-right: 150px;
+  /*padding-top: 100px; */
+  padding-top: 150px;
+  padding-bottom: 100px;
+}
+
+.about1 {}
+
+.about2 {}
+
+.soy {
+  padding-top: 0.75rem;
+  /*  width:50%; */
+  text-align: justify;
+  padding-left: 30px;
+}
+
+.aptitudes {
+  list-style-type: none;
+}
+
+.item {
+  padding-top: 0.40rem;
+}
+
+.item1 {
+  padding-top: 0.75rem;
+  padding-right: 3rem;
+}
+
+.item2 {
+  padding-top:0.40rem;
+  padding-right: 3rem;
+}
+
+.item3 {
+  padding-top: 0.40rem;
+  padding-left:3.5rem;
+}
+
+.item4 {
+  padding-top: 0.40rem;
+}
+
+.item5 {
+  padding-top: 0.40rem;
+  padding-right:2.8rem;
+}
+
+.item6 {
+  padding-top: 0.40rem;
+  padding-right:3.1rem;
+}
+
+.personal-1 {
+  max-width: 100%;
+  height: auto;
+  border-radius: 30px;
+  margin-top: 30px;
+}
+
+.personal-2 {
+  max-width: 100%;
+  height: auto;
+  border-radius: 30px;
+  margin-top: 30px;
+}
+
+/*********************************************FINAL SECCIÓN 2****************+/
+
+  /***********************************************Seccion 3*********************************/
+.middle-container2 {
+  position: relative;
+  padding-left: 125px;
+  padding-right: 150px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.skill-row1 {
+  margin: 75px auto 50px auto;
+  width: 75%;
+  text-align: left;
+  padding-bottom: 50px;
+}
+
+.skill-row {
+  margin: 50px auto 50px auto;
+  width: 75%;
+  text-align: left;
+  padding-top: 100px;
+}
+
+.fb-image {
+  width: 200px;
+  height: 200px;
+  float: right;
+  margin-left: 30px;
+}
+
+.web-image {
+  width: 200px;
+  height: 200px;
+  float: left;
+  margin-right: 30px;
+}
+
+.email-image {
+  width: 200px;
+  height: 200px;
+  float: left;
+  margin-right: 30px;
+}
+
+.copy-image {
+  width: 200px;
+  height: 200px;
+  float: right;
+  margin-left: 30px;
+}
+
+.analisis-image {
+  width: 200px;
+  height: 200px;
+  float: right;
+  margin-left: 30px;
+}
+
+.automatico-image {
+  width: 200px;
+  height: 200px;
+  float: right;
+  margin-left: 30px;
+}
+
+.salesforce-image {
+  width: 200px;
+  height: 200px;
+  float: right;
+  margin-left: 30px;
+}
+
+.seo-image {
+  width: 230px;
+  height: 240px;
+  float: left;
+  margin-right: 30px;
+}
+
+.google-image {
+  width: 200px;
+  height: 200px;
+  float: right;
+  margin-left: 30px;
+}
+
+.excel-image {
+  width: 200px;
+  height: 200px;
+  float: left;
+  margin-right: 30px;
+}
+
+.edit-image {
+  width: 200px;
+  height: 200px;
+  float: left;
+  margin-right: 30px;
+}
+
+.english-image {
+  width: 200px;
+  height: 200px;
+  float: left;
+  margin-right: 30px;
+}
+
+.descripcion-english {
+  text-align: justify;
+}
+
+
+
+/***********************************************Final sección 3*********************************/
+
+/***********************************************Sección 4*********************************/
+h2.experiencia{
+  font-weight:bold;
+  color:#9698FF;
+}
+
+.almost-bottom-container
+{
+  position:relative;
+  padding-top:0px;
+  padding-top: 100px;
+  padding-bottom:100px;
+  padding-left:125px;
+  padding-right:150px;
+  background-color: #fff;
+}
+
+.col-experiencias{
+  text-align:justify;
+  padding-right:100px;
+  padding-top:0px;
+  padding-left:15px;
+}
+
+.col-titulos-experiencias{
+  text-align: justify;
+  padding-left:125px;}
+
+  .col-titulos-experiencias3{
+    padding-top:50px;
+    text-align: justify;
+    padding-left:125px;
+  }
+
+  .col-experiencias3{
+    padding-top:50px;
+    text-align:justify;
+    padding-right:100px;
+    padding-left: 15px;
+  }
+
+.listado{
+  padding-left: 0px;
+  padding-top: 0.5rem;
+  line-height:2.0;
+}
+
+
+.especialista {
+  padding-top: 2.5rem;
+    text-align:justify;
+    line-height:2;
+}
+
+.especialista1 {
+  line-height:1.8;
+  padding-top:2.0rem;
+  text-align:justify;
+}
+
+.lugar {
+  padding-top: 0.75rem;
+}
+
+.descripcion-especialista {
+  padding-top: 1.5rem;
+    text-align: justify;
+    margin-bottom: 0;
+}
+
+
+
+
+/***********************************************Final sección 4*********************************/
+
+/***********************************************Sección 5*********************************/
+
+
+.siestas{
+  font-size: 1.17em;
+  margin: 0px auto 0px;
+  padding-left:25px;
+  padding-right:25px;
+}
+
+
+.contact-message {
+  width:60%;
+  margin: 40px auto 60px;
+  text-align:justify;
+}
+
+.contact-me{
+  padding-top: 100px;
+  padding-bottom: 100px;
+  padding-left:125px;
+  padding-right:150px;
+}
+
+
+.bottom-container
+{
+  position:relative;
+  padding-top:100px;
+  background-color: #B1B2FF;
+  padding-bottom:110px;
+  padding-right:150px;
+  padding-left:125px;
+}
+
+
+.experiencia-foot{
+  color: white;
+  font-family: 'Merriweather', serif;
+  text-align:justify;
+}
+
+.footer-link{
+  color:white !important;
+}
+
+
+.pie{
+  position:relative;
+  color:#EEF1FF;
+  font-size:0.7rem;
+  margin: 0px auto 0px;
+  top:50px;
+}
+
+.mi-contacto{
+  text-align: center;
+  padding-top:25px;
+}
+
+.redes-sociales{
+  text-align: center;
+    padding-top:25px;
+}
+
+.footer{
+  color:#696BB3;
+/* color: white; */
+
+}
+/* Fixed/sticky icon bar (vertically aligned 50% from the top of the screen)
+top: 50%;
+-webkit-transform: translateY(-50%);
+-ms-transform: translateY(-50%);
+transform: translateY(-50%);
+*/
+.icon-bar {
+  position: fixed;
+  z-index: 1;
+  right: 3rem;
+  bottom: 3rem;
+}
+
+
+.escribeme{
+display: inline-block;
+  color:black;
+}
+
+.whatsapp{
+  padding-left:5px;
+    color:black;
+}
+
+.whatsapp:hover{
+    color:#B1B2FF;
+}
+
+.escribeme:hover{
+  color:#B1B2FF;
+}
+
+/***********************************************Media querys*********************************/
+@media (min-width: 1900px) {
+  .navbar {
+    padding-right: 250px;
+    padding-left: 200px;
+  }
+
+  .col-soy {
+    padding-left: 120px;
+    padding-right: 140px;
+  }
+}
+
+@media (min-width: 1791px) {
+  .col-soy {
+    padding-left: 90px;
+    padding-right: 110px;
+  }
+
+}
+
+
+@media (min-width: 1750px) and (max-width:1900px) {
+  .navbar {
+    padding-right: 200px;
+    padding-left: 150px;
+  }
+  .col-experiencias3{
+    padding-right:60px;
+  }
+
+
+  .col-titulos-experiencias3{
+    padding-left:90px;
+  }
+
+  .col-titulos-experiencias{
+    padding-left:90px;
+  }
+
+  .col-experiencias{
+    padding-right:60px;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+@media (max-width:1750px) {
+  .navbar {
+    padding-left: 150px;
+    padding-right: 150px;
+  }
+
+  .col-abraham2 {
+    padding-left: 100px;
+  }
+
+  .col-aptitudes {
+    padding-left: 100px;
+  }
+
+  .col-experiencias3{
+    padding-right:0px;
+  }
+
+
+  .col-titulos-experiencias3{
+    padding-left:90px;
+  }
+
+  .col-titulos-experiencias{
+    padding-left:90px;
+  }
+
+  .col-experiencias{
+    padding-right:0px;
+  }
+
+
+}
+
+
+
+
+
+
+
+
+@media (max-width:1666px) {
+  .col-soy {
+    padding-left: 30px;
+    padding-right: 50px;
+  }
+
+  .col-abraham2 {
+    padding-left: 15px;
+  }
+
+  .col-aptitudes {
+    padding-left: 15px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .navbar {
+    padding-left: 100px;
+    padding-top: 50px;
+    padding-right: 80px;
+  }
+
+  .middle-container {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+
+}
+
+@media (max-width: 1228px) {
+  .quien-soy {
+    padding-top: 40px;
+  }
+
+  h1 {
+    line-height: 1.3;
+  }
+
+  .skill-row1 {
+    width: 100%;
+  }
+
+  .skill-row {
+    width: 100%;
+  }
+}
+
+
+
+@media (max-width: 1180px) {
+  .navbar {
+    padding-left: 140px;
+    padding-top: 50px;
+    padding-right: 40px;
+  }
+
+
+    .col-experiencias3{
+      padding-right:0px;
+    }
+
+    .col-titulos-experiencias3{
+      padding-left:0px;
+    }
+
+    .col-titulos-experiencias{
+      padding-left:0px;
+    }
+
+    .col-experiencias{
+      padding-right:0px;
+    }
+
+
+
+
+
+
+}
+
+@media (min-width: 1000px) {
+  .col-soy {
+    padding-left: 50px;
+    padding-right: 70px;
+  }
+
+  .col-aptitudes {
+    padding-right: 100px;
+  }
+}
+
+@media (max-width: 991px) {
+
+  .mi-contacto{
+    text-align: center;
+    padding-top:40px;
+  }
+
+  .redes-sociales{
+    text-align: center;
+      padding-top:40px;
+}
+  .almost-bottom-container{
+    padding-left:100px;
+    padding-right:100px;
+  }
+
+  .aptitudes {
+    padding-right: 5rem;
+  }
+
+  h1 {
+    margin-top: 20px;
+  }
+
+  .quien-soy {
+    padding-top: 20px;
+    padding-bottom: 80px;
+  }
+
+  .about1 {
+    padding-top: 20px;
+  }
+
+  .about2 {
+    padding-top: 60px;
+  }
+
+  .navbar {
+    padding-right: 180px;
+    position:static;
+  }
+
+  .middle-container {
+    padding-left: 125px;
+    padding-right: 150px;
+  }
+
+  .middle-container2 {
+    padding-left: 125px;
+    padding-right: 150px;
+}
+    .col-titulos-experiencias3{
+      padding-left:0px;
+    }
+
+    .col-titulos-experiencias{
+      padding-left:0px;
+    }
+
+
+
+
+
+
+
+
+}
+
+@media (max-width: 940px) {
+  .bottom-container{
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+  .skill-row1 {
+    text-align: center;
+    padding-bottom: 0px;
+  }
+
+  .skill-row {
+    text-align: center;
+    padding-top: 25px;
+  }
+
+  .fb-image {
+    float: none;
+    margin-left: 0px;
+  }
+
+  .web-image {
+    float: none;
+    margin-left: 0px;
+  }
+
+  .email-image {
+    float: none;
+    margin-right: 0px;
+  }
+
+  .copy-image {
+    float: none;
+    margin-right: 0px;
+  }
+
+  .analisis-image {
+    float: none;
+    margin-left: 0px;
+  }
+
+  .automatico-image {
+    float: none;
+    margin-right: 0px;
+  }
+
+  .salesforce-image {
+    float: none;
+    margin-left: 0px;
+  }
+
+  .seo-image {
+    margin-left: 40px;
+    float: none;
+    margin-right: 0px;
+  }
+
+  .google-image {
+    float: none;
+    margin-left: 0px;
+  }
+
+  .excel-image {
+    float: none;
+    margin-right: 0px;
+  }
+
+  .edit-image {
+    float: none;
+    margin-left: 0px;
+  }
+
+  .english-image {
+    float: none;
+    margin-right: 0px;
+  }
+}
+
+@media (max-width: 850px) {
+  .mountain {
+    max-width: 100%;
+  }
+
+  .navbar {
+    padding-left: 100px;
+    padding-right: 180px;
+  }
+  .bottom-container{
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+}
+
+
+@media (max-width: 767px) {
+  .contact-message {
+    width:80%;}
+.experiencia{
+  text-align:center;
+}
+
+.col-titulos-experiencias{
+  padding-left:125px;
+  padding-right:150px;
+}
+
+.col-experiencias{
+  padding-left:125px;
+  padding-right:150px;
+}
+
+.col-titulos-experiencias3{
+  padding-left:125px;
+  padding-right:150px;
+}
+
+.col-experiencias3{
+  padding-left:125px;
+  padding-right:150px;
+  padding-top:0px;
+}
+
+
+
+.almost-bottom-container{
+  padding-left:50px;
+  padding-right:50px;
+}
+
+
+}
+
+
+
+
+
+@media (max-width: 736px) {
+  .top-container {
+    padding-left: 100px;
+    padding-right: 100px;
+    }
+    .contact-me{
+      padding-left: 100px;
+      padding-right: 100px;
+    }
+  .bottom-container{
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  .navbar {
+    padding-left: 90px;
+    padding-right: 120px;
+  }
+  .middle-container {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+  .middle-container2 {
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.col-titulos-experiencias{
+  padding-left:100px;
+  padding-right:100px;
+}
+
+.col-experiencias{
+  padding-left:100px;
+  padding-right:100px;
+}
+
+.col-titulos-experiencias3{
+  padding-left:100px;
+  padding-right:100px;
+}
+
+.col-experiencias3{
+  padding-left:100px;
+  padding-right:100px;
+}
+
+
+}
+
+@media (max-width: 661px) {
+  .top-container {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+  .contact-me{
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  .bottom-container{
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .navbar {
+    padding-left: 40px;
+    padding-right: 70px;
+  }
+
+  .skill-row1 {
+    margin-top: 50px;
+  }
+
+  .middle-container {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+  .middle-container2 {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.col-titulos-experiencias{
+  padding-left:50px;
+  padding-right:50px;
+}
+
+.col-experiencias{
+  padding-left:50px;
+  padding-right:50px;
+}
+
+.col-titulos-experiencias3{
+  padding-left:50px;
+  padding-right:50px;
+}
+
+.col-experiencias3{
+  padding-left:50px;
+  padding-right:50px;
+}
+
+
+
+
+
+
+}
+
+@media (max-width: 562px) {
+
+  .experiencia-foot{
+    text-align: center;
+  }
+
+  .top-container {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .contact-me{
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+
+  .bottom-container{
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .middle-container {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .middle-container2 {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.almost-bottom-container{
+  padding-left:25px;
+  padding-right:25px;
+}
+
+
+  .mountain {
+    max-width: 100%;
+    height: auto;
+  }
+
+  h1 {
+    font-size: 4.62rem;
+  }
+
+  h2 {
+    font-size: 2.0rem;
+  }
+
+  h2.experiencia-foot {
+    font-size: 2.5rem;
+  }
+
+
+  h3{
+    font-size: 1.5rem;
+  }
+
+  .btn {
+    font-size: 1.0rem;
+  }
+
+  .quien-soy {
+    padding-bottom: 40px;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+  }
+
+  h5 {
+    font-size: 1.0rem;
+  }
+
+  p {
+    line-height: 2.0;
+    font-size: 1.0rem;
+  }
+
+  ul {
+    font-size: 1.0rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    margin-top: 10px;
+  }
+
+  .top-container {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .middle-container {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .middle-container2 {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+  .download-button {
+    max-width: 100%;
+  }
+
+  .navbar {
+    padding-left: 0px;
+    padding-right: 30px;
+  }
+
+  .aptitudes {
+
+  }
+
+  .col-aptitudes {
+    padding-right: 20px;
+    padding-left: 0px;
+  }
+
+}
+
+@media (max-width: 439px){
+
+.item3 {
+  padding-left:2.45rem;
+}
+}
+
+@media (max-width: 429px) {
+.item1{
+  padding-left:11px;
+}
+
+.item2{
+  padding-right:40px;
+}
+
+.item3{
+  padding-left:38px;
+}
+
+.item4{
+  padding-right:3px;
+}
+
+.item5 {
+  padding-right:2.2rem;
+}
+
+.item6{
+  padding-left: 9px;
+}
+
+.item{
+  padding-right:4px;
+}
+
+  h1 {
+    font-size: 4.12rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+  h2.experiencia-foot {
+    font-size: 2.5rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+  }
+
+  h3{
+    font-size: 1.25rem;
+  }
+
+  h4{
+    font-size: 1.0rem;
+  }
+  h5 {
+    font-size: 0.8rem;
+  }
+
+  p{
+    font-size: 0.75rem;
+  }
+
+  ul{
+      font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 394px) {
+  h1 {
+    font-size: 3.62rem;
+    margin-top: 0px;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+  }
+  h2.experiencia-foot {
+    font-size: 2.5rem;
+  }
+
+h2.experiencia{
+  font-size:1.75rem;
+}
+
+  .btn {
+    font-size: 0.75rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.0rem;
+  }
+
+  .navbar-toggler {
+    height: 1.8rem;
+  }
+
+  .navbar-toggler-icon {
+    height: 1.3rem;
+  }
+
+  .aptitudes {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
+
+@media (max-width: 347px) {
+  h1 {
+    font-size: 3.12rem;
+  }
+
+  h2 {
+    font-size: 1.15rem;
+  }
+
+  .btn {
+    font-size: 0.68rem;
+  }
+}
