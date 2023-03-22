@@ -1,0 +1,660 @@
+---
+title: "Cyclistics Analysis in R"
+author: "By: Abraham Cedeño"
+phone: "+507 69827535"
+date: "2022-11-11"
+output: html_document
+--- 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+  
+  
+## Section 1: Data preparation (Import, transform, sort and filter)
+***
+
+### Import libraries
+```{r, results='hide', message=FALSE, warning=FALSE}
+library(tidyverse)
+library(stringr)
+library(ggpubr)
+```
+
+### Define paths to data sets
+If you don't keep your data in the same directory as the code, adapt the path names.
+```{r cars}
+dir1 <- "~"
+dir2 <- "Desktop"
+dir3 <- "AC"
+dir4 <- "Useful"
+dir5 <- "Carrer"
+dir6 <- "Cursos"
+dir7 <- "2. Data analysis-Google"
+dir8 <- "Capstone Case study 1"
+dir9 <- "How I solved it"
+dir10 <- "Data - cleaning - sorting - filtering" 
+file_name  <- "Version 3"
+PSDS_PATH <- file.path(dir1, dir2, dir3, dir4, dir5, dir6, dir7, dir8,dir9,dir10, file_name)
+```
+
+### Import csv files as data frames
+```{r, results='hide', message=FALSE, warning=FALSE}
+BikeTrips_2021_11_04_v31 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2021_11_04_v31.csv'))
+BikeTrips_2021_11_04_v32 <-  read_csv(file.path(PSDS_PATH, 'BikeTrips_2021_11_04_v32.csv'))
+BikeTrips_2021_12_08_v3 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2021_12_08_v3.csv'))
+BikeTrips_2022_01_06_v3 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2022_01_06_v3.csv'))
+BikeTrips_2022_02_02_v3 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2022_02_02_v3.csv'))
+BikeTrips_2022_03_02_v3 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2022_03_02_v3.csv'))
+BikeTrips_2022_04_06_v3 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2022_04_06_v3.csv'))
+BikeTrips_2022_05_03_v3 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2022_05_03_v3.csv'))
+BikeTrips_2022_06_03_v31 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2022_06_03_v31.csv'))
+BikeTrips_2022_06_03_v32 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2022_06_03_v32.csv'))
+BikeTrips_2022_07_15_v31 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2022_07_15_v31.csv'))
+BikeTrips_2022_07_15_v32 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2022_07_15_v32.csv'))
+BikeTrips_2022_08_05_v31 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2022_08_05_v31.csv'))
+BikeTrips_2022_08_05_v32 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2022_08_05_v32.csv'))
+BikeTrips_2022_09_08_v31 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2022_09_08_v31.csv'))
+BikeTrips_2022_09_08_v32 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2022_09_08_v32.csv'))
+BikeTrips_2022_10_11_v31 <- read_csv(file.path(PSDS_PATH, 'BikeTrips_2022_10_11_v31.csv'))
+BikeTrips_2022_10_11_v32 <-read_csv(file.path(PSDS_PATH, 'BikeTrips_2022_10_11_v32.csv'))
+```
+
+### Change column names
+To ensure that I could merge the data frames together later, I checked the column names and corrected any spelling mistakes as needed to make them consistent across all the data frames.
+```{r, results='hide', message=FALSE, warning=FALSE}
+colnames(BikeTrips_2021_12_08_v3)[4] <- "started_time"
+colnames(BikeTrips_2022_02_02_v3)[4] <- "started_time"
+colnames(BikeTrips_2022_02_02_v3)[5] <- "end_date"
+colnames(BikeTrips_2022_02_02_v3)[6] <- "end_time"
+```
+
+### Merge all data frames into 1
+```{r, results='hide', message=FALSE, warning=FALSE}
+BikeTrips_todos <- rbind(BikeTrips_2021_11_04_v31, BikeTrips_2021_11_04_v32, BikeTrips_2021_12_08_v3, BikeTrips_2022_01_06_v3, BikeTrips_2022_02_02_v3, BikeTrips_2022_03_02_v3, BikeTrips_2022_04_06_v3, BikeTrips_2022_05_03_v3, BikeTrips_2022_06_03_v31, BikeTrips_2022_06_03_v32, BikeTrips_2022_07_15_v31, BikeTrips_2022_07_15_v32, BikeTrips_2022_08_05_v31, BikeTrips_2022_08_05_v32, BikeTrips_2022_09_08_v31, BikeTrips_2022_09_08_v32, BikeTrips_2022_10_11_v31, BikeTrips_2022_10_11_v32)
+```
+
+### Transform dataype from chr to date
+```{r}
+class(BikeTrips_todos$started_date)
+BikeTrips_todos$started_date <- mdy(BikeTrips_todos$started_date)
+class(BikeTrips_todos$started_date)
+class(BikeTrips_todos$end_date)
+BikeTrips_todos$end_date <- mdy(BikeTrips_todos$end_date)
+class(BikeTrips_todos$end_date)
+```
+### Sort ascending according to started_date and started_time
+```{r, results='hide', message=FALSE, warning=FALSE}
+BikeTrips_todos<- arrange(BikeTrips_todos,started_date,started_time)
+```
+
+  
+## Section 2: Data process (clean)
+***
+
+### Duplicates
+I've used the function duplicated and saves the duplicates in a dataframe called duplicates (The I'ds where duplicated but the data was different)
+
+```{r}
+duplicates <-BikeTrips_todos[duplicated(BikeTrips_todos$ride_id)|duplicated(BikeTrips_todos$ride_id, fromLast=TRUE),]
+```
+Therefore, I concluded that there were no duplicates.
+
+### Blanks or mispellings in CHR columns
+I've check max and min length of CHR datatypes to find if there were any blanks (below some of them)
+```{r}
+max(nchar(BikeTrips_todos$rideable_type))
+min(nchar(BikeTrips_todos$rideable_type))
+```
+The only 3 options are "classic_bike", "electric_bike" and "docked_bike" which have 12, 13 and 11 characters respectively, therefore, I concluded that there were no blanks.
+
+### Ranges of NUM columns 
+I've check max and min values of NUM datatypes to find if there were any blanks (below some of them)
+```{r}
+max(BikeTrips_todos$start_lng)
+min(BikeTrips_todos$start_lng)
+```
+
+Longitudes could range from -180 to 0 (West) or 0 to 180 (east). Therefore, the longitudes are inside the range. Altough, Chicago longides are between -87.63 to -87.52 degrees West, which means that there are some values out of that range, we will have to decide what to do with those measure later on.
+
+### Count values with the length expected
+I've used this function which is similar to countIF to know how many observations had more than 8 characters
+```{r}
+sum(nchar(BikeTrips_todos$rideable_type) > 8, na.rm=TRUE)
+```
+All observations must fall within this range, as the "BikeTrips_todos" data frame has 5528236 observations, we conclude that the "count" is correct.
+
+### Count values with the latitude expected
+I've used with this function which is similar to countIF to know how many observations had latitudes above 8º.
+```{r}
+sum(BikeTrips_todos$start_lat > 8, na.rm=TRUE)
+```
+All observations must fall within this range, as the Chicago's latitude range is between 41.6ºN and 42ºN, the data frame has 5528236 observations, we conclude that the "count" is correct.
+
+### Erase all blanks if there are
+I've use this function to erase all blank spaces before and after all characters 
+```{r}
+BikeTrips_todos <- BikeTrips_todos %>% mutate(across(where(is.character), str_trim))
+```
+
+  
+  
+## Section 3: Analysis phase (calculations, visualizations, explore data)
+
+### 1. What was the percentage distribution of bike preferences?
+***
+
+#### Calculus of % distribution
+I've created a function called conteo. This function does the following:
+
+1. Filters the "BikeTrips_todos" data frame by casual or member.
+
+2. Count the rides per type of ride (classic, electric, docked).
+
+3. Creates a new column with the % calculations.
+
+4. Scale the percentages in a new column called "lables" as characters to plot later on.
+
+```{r}
+conteo<- function(casual_or_member) {BikeTrips_todos %>%
+  filter(member_casual == casual_or_member) %>%
+  group_by(rideable_type) %>% # Variable to be transformed
+  count(rideable_type)  %>% 
+  ungroup() %>% 
+  mutate(perc = n / sum(n)) %>% 
+  arrange(perc) %>%
+  mutate(labels = scales::percent(perc))  }
+```
+
+#### Apply function and visualize tables
+```{r}
+conteoA <- conteo("casual")
+conteoB <- conteo("member")
+conteoA
+conteoB
+```
+
+
+#### Pie chart visualizations
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE }
+# I've created a plot to visualise bike preference for casual riders in a pie chart
+a1 <- ggplot(conteoA, aes(x ="", y = perc, fill = rideable_type)) +
+  geom_col(color="white") +
+  scale_fill_manual(values=c("#cce6ea", "#d9f150", "#3aaca6"))+
+  geom_text(aes(label = labels),
+            position = position_stack(vjust = 0.5), size=5) +
+  coord_polar(theta = "y") +
+  labs(title = "         Bike preference - casual riders", y= "%", x= "%")
+a1
+
+# I've created a plot to visualise bike preference for member riders in a pie chart
+b1 <- ggplot(conteoB, aes(x ="", y = perc, fill = rideable_type)) +
+  geom_col(color="white") +
+  scale_fill_manual(values=c("#cce6ea", "#3aaca6"))+
+  geom_text(aes(label = labels),
+            position = position_stack(vjust = 0.5), size=5) +
+  coord_polar(theta = "y") +
+  labs(title = "         Bike preference - member riders", y= "%", x= "%")
+b1
+
+# Finally, I plot the two charts one above the other using the ggarrange function
+theme_set(theme_grey())
+vis_question1 <- ggarrange(a1, b1,
+                    ncol = 2, nrow = 1)
+vis_question1
+
+```
+
+
+### 2. How is the service usage distributed over the week?
+***
+
+#### Order days of the week
+Default is for Sunday to be the first day on R, I used the function factor to order the "day_of_week" column
+```{r, results='hide', message=FALSE, warning=FALSE}
+BikeTrips_todos_ordenado_por_dia<-BikeTrips_todos
+BikeTrips_todos_ordenado_por_dia$day_of_week <- factor(BikeTrips_todos_ordenado_por_dia$day_of_week, c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+```
+
+#### Counts the number of trips per day of the week
+I've created a function called day. This function does the following:
+
+1. Filters the "BikeTrips_todos_ordenado_por_dia" data frame by casual or member.
+
+2. Sort and count the rides per day of the week (monday, tuesday, etc).
+
+3. Creates a new column with the % calculations.
+
+4. Scale the percentages in a new column called "labels" as characters to plot later on.
+
+```{r}
+day <- function(casual_or_member) {BikeTrips_todos_ordenado_por_dia %>%
+  filter(member_casual == casual_or_member) %>%
+  group_by(day_of_week) %>% # Variable to be transformed
+  count(day_of_week)  %>% 
+  ungroup() %>% 
+  mutate(perc = n / sum(n)) %>% 
+  arrange(perc) %>%
+  mutate(labels = scales::percent(perc)) } 
+```
+
+#### Apply function and visualize tables
+```{r}
+day_casual <- day("casual")
+day_member <- day("member")
+day_casual
+day_member
+```
+
+#### Bar and pie chart visualizations
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# I've created a plot to visualize day preference for casual riders in a pie chart
+a2 <- ggplot(day_casual, aes(x ="", y = perc, fill = day_of_week)) +
+  geom_col(color="white") +
+  scale_fill_manual(values=c("#cce6ea", "#d9f150", "#3aaca6", "#AB613A", "#F7B03B", "#F7746D","#32AB60"))+
+  geom_text(aes(label = labels),
+            position = position_stack(vjust = 0.5), size=4) +
+  coord_polar(theta = "y") +
+  labs(title = "         Day preference - casual riders", y= "%", x= "%")
+a2
+
+# I've created a plot to visualize day preference for member riders in a pie chart
+b2 <- ggplot(day_member, aes(x ="", y = perc, fill = day_of_week)) +
+  geom_col(color="white") +
+  scale_fill_manual(values=c("#cce6ea", "#d9f150", "#3aaca6", "#AB613A", "#F7B03B", "#F7746D","#32AB60"))+
+  geom_text(aes(label = labels),
+            position = position_stack(vjust = 0.5), size=4) +
+  coord_polar(theta = "y") +
+  labs(title = "         Day preference - member riders", y= "%", x= "%")
+b2
+
+# I plotted the two graphs in one image
+# vis_question2 <- ggarrange(a2, b2,
+                          # ncol = 1, nrow = 2)
+# vis_question2
+
+
+# I created a plot to visualize day preference per type of rider as bar chart
+c2 <- ggplot(BikeTrips_todos_ordenado_por_dia, aes(x = day_of_week, fill = member_casual)) +
+  geom_bar(position= "dodge", alpha =1, width = 0.75, color="white") +
+  scale_fill_manual(values=c("#3aaca6", "#d9f150"))+
+  labs(title = "         Day pereference per type of rider", y= "count of trips", x= "day of the week")
+
+# Turn of exponentials in the plotting
+options(scipen=999)
+
+c2
+```
+
+## 3. How is the service usage distributed over a day?
+***
+
+#### Counts the number of trips per time second by second
+I've created a function called "calculate_bike_trip_counts". This function does the following:
+
+1. The if statement checks if member_type is provided. If it is, the function filters data to only include rows where the member_casual column matches member_type. If it isn't provided, all rows are included.
+
+2. The function then groups the rows of the data data frame by started_time column and counts the number of occurrences of each unique value in the started_time column, sorted in descending order. The result is a new data frame trip_counts that shows the count of bike trips for each unique started_time value.
+
+3. Finally, the function returns the trip_counts data frame.
+
+```{r}
+calculate_bike_trip_counts <- function(data, member_type = NULL) {
+  if (!is.null(member_type)) {
+    data <- data %>% filter(member_casual == member_type)
+  }
+  trip_counts <- data %>%
+    group_by(started_time) %>%
+    count(started_time, sort = TRUE)
+  return(trip_counts)
+}
+```
+
+#### Apply function
+```{r}
+Tiempo_conteo <- calculate_bike_trip_counts(BikeTrips_todos, NULL)
+Tiempo_conteo_casual <- calculate_bike_trip_counts(BikeTrips_todos, "casual")
+Tiempo_conteo_member <- calculate_bike_trip_counts(BikeTrips_todos, "member")
+```
+
+#### Convert time to POSIXct for plotting
+I've created a function called "convert_and_adjust_time". This function does the following:
+
+1. Takes a data frame and converts the started_time column to POSIXct format 
+
+2. Adjusts any values less than the Unix epoch time to be one day ahead.
+```{r}
+convert_and_adjust_time <- function(df) {
+  df %>%
+    mutate(started_time = as.POSIXct(started_time),
+           started_time = if_else(started_time < as.POSIXct('1970-01-01 00:00:00', 'UTC'), started_time + 86400, started_time))
+}
+```
+
+#### Apply function
+```{r}
+Tiempo_conteo2 <- convert_and_adjust_time(Tiempo_conteo)
+Tiempo_conteo_casual2 <- convert_and_adjust_time(Tiempo_conteo_casual)
+Tiempo_conteo_member2 <- convert_and_adjust_time(Tiempo_conteo_member)
+```
+
+#### Dot plot visualization
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# I assigned the plot of casual riders into a3
+a3 <- ggplot(data = Tiempo_conteo_casual2, mapping = aes(x = started_time, y = n)) +  geom_point(size=3, alpha=0.5, color="#f5746c") + geom_smooth()+
+  labs(title="# of trips per time of the day for casual riders- last 12 months", y= "count of trips", x= "time measured by seconds")+
+  theme_bw()+
+  theme(axis.text.x = element_text(hjust = 1,family="Times", face="bold", size=12, color="black"), 
+        axis.title.x = element_text(family="Times", face="bold", size=16, color="black"),
+        axis.text.y = element_text(family="Times", face="bold", size=12, color="black"),
+        axis.title.y = element_text(family="Times", face="bold", size=16, color="black"),
+        strip.text = element_text(size=10, face="bold"),
+        plot.title = element_text(size=20, face="bold"),
+        legend.title = element_blank(),
+        legend.text = element_text(family="Times", color = "black", size = 16,face="bold"),
+        legend.position="none")+
+  scale_x_datetime(date_labels = '%H:%M', 
+                   limits = c(as.POSIXct('1970-01-01 00:00:00', tz = 'UTC'), 
+                              as.POSIXct('1970-01-02 00:00:00', tz = 'UTC')), 
+                   breaks = '2 hour')
+
+a3
+
+
+# I assigned the plot of member riders into b3
+b3 <- ggplot(data = Tiempo_conteo_member2, mapping = aes(x = started_time, y = n)) +  geom_point(size=3, alpha=0.5, color="#19b5bb") + geom_smooth()+
+  labs(title="# of trips per time of the day for member riders- last 12 months", y= "count of trips", x= "time measured by seconds") +
+  theme_bw()+
+  theme(axis.text.x = element_text(hjust = 1,family="Times", face="bold", size=12, color="black"), 
+        axis.title.x = element_text(family="Times", face="bold", size=16, color="black"),
+        axis.text.y = element_text(family="Times", face="bold", size=12, color="black"),
+        axis.title.y = element_text(family="Times", face="bold", size=16, color="black"),
+        strip.text = element_text(size=10, face="bold"),
+        plot.title = element_text(size=20, face="bold"),
+        legend.title = element_blank(),
+        legend.text = element_text(family="Times", color = "black", size = 16,face="bold"),
+        legend.position="none")+
+  scale_x_datetime(date_labels = '%H:%M', 
+                   limits = c(as.POSIXct('1970-01-01 00:00:00', tz = 'UTC'), 
+                              as.POSIXct('1970-01-02 00:00:00', tz = 'UTC')), 
+                   breaks = '2 hour')
+  b3
+
+
+# I created a picture with both visualizations a3 and b3
+vis_question3 <- ggarrange(a3, b3,
+                           ncol = 1, nrow = 2)
+vis_question3
+```
+
+## 4. What is the average trip duration?
+***
+#### Convert time to POSIXct for plotting
+I've created a function called "calculate_ride_length". This function does the following:
+
+1. Takes in a data frame data and an optional argument member_type. The if statement checks if member_type is provided. If it is, the function filters data to only include rows where the member_casual column matches member_type. If it isn't provided, all rows are included.
+
+2. The function then modifies the ride_length column of the data data frame by converting it to POSIXct format and adding 86400 seconds (one day) if the ride_length is less than 1970-01-01 00:00:00 in UTC time. This is done using the mutate and if_else functions from dplyr.
+
+3. Finally, the function returns the modified data data frame.
+
+```{r}
+calculate_ride_length <- function(data, member_type = NULL) {
+  if (!is.null(member_type)) {
+    data <- data %>% filter(member_casual == member_type)
+  }
+  data <- data %>% mutate(
+    ride_length = as.POSIXct(ride_length),
+    ride_length = if_else(ride_length < as.POSIXct('1970-01-01 00:00:00', 'UTC'), ride_length + 86400, ride_length)
+  )
+  return(data)
+}
+```
+
+```{r}
+BikeTrips_todos_casual <- calculate_ride_length(BikeTrips_todos, "casual")
+
+BikeTrips_todos_member <- calculate_ride_length(BikeTrips_todos, "member")
+```
+
+
+
+#### Calculate mean and median for casual and member riders
+```{r}
+# I calculated the mean for casual riders and convert it into a numeric value
+mean1 <- BikeTrips_todos_casual %>%
+   summarize(mean(ride_length))
+
+mean1_numeric <- as.numeric(mean1)
+mean1
+
+
+# I calculated the median for casual riders and convert it into a numeric value
+median_casual <- BikeTrips_todos_casual %>%
+  summarize(median(ride_length))
+
+median1_numeric <- as.numeric(median_casual)
+median_casual
+
+
+# I calculated the mean for member riders and convert it into a numeric value
+mean2 <- BikeTrips_todos_member %>%
+  summarize(mean(ride_length))
+
+mean2_numeric <- as.numeric(mean2)
+mean2
+
+# I calculated the median for casual riders and convert it into a numeric value
+median_member <- BikeTrips_todos_member %>%
+  summarize(median(ride_length))
+
+median2_numeric <- as.numeric(median_member)
+median_member
+```
+
+#### Create 2 vertical lines with the mean for plotting
+```{r}
+mean1_vertical <- data.frame(x=c(mean1_numeric,mean1_numeric), y=c(-5,5))
+
+mean2_vertical <- data.frame(x=c(mean2_numeric,mean2_numeric), y=c(-5,5))
+```
+
+#### Histogram visualizations
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+# I plotted a histogram with the mean 
+ggplot(BikeTrips_todos_casual, aes(x=ride_length)) + geom_histogram(fill="#3aaca6", color="white") +
+  geom_vline(data=mean1_vertical, aes(x, y), xintercept = mean1_numeric , color="#AB613A")+
+  theme_bw()+
+  theme(axis.text.x = element_text(hjust = 1,family="Times", face="bold", size=12, color="black"), 
+        axis.title.x = element_text(family="Times", face="bold", size=16, color="black"),
+        axis.text.y = element_text(family="Times", face="bold", size=12, color="black"),
+        axis.title.y = element_text(family="Times", face="bold", size=16, color="black"),
+        strip.text = element_text(size=10, face="bold"),
+        plot.title = element_text(size=20, face="bold"),
+        legend.title = element_blank(),
+        legend.text = element_text(family="Times", color = "black", size = 16,face="bold"),
+        legend.position="right")+
+  scale_x_datetime(date_labels = '%H:%M', 
+                   limits = c(as.POSIXct('1970-01-01 00:00:00', tz = 'UTC'), 
+                              as.POSIXct('1970-01-01 01:00:00', tz = 'UTC')), 
+                   breaks = '10 mins') +
+  labs(title = "Distribution of trip duration and average trip duration - Casual riders", y= "count of trips", x= "trip duration")
+
+
+
+
+# I plotted a histogram with the mean 
+ggplot(BikeTrips_todos_member, aes(x=ride_length)) + geom_histogram(fill="#3aaca6", color="white") +
+  geom_vline(data=mean2_vertical, aes(x, y), xintercept = mean2_numeric , color="#AB613A")+
+  theme_bw()+
+  theme(axis.text.x = element_text(hjust = 1,family="Times", face="bold", size=12, color="black"), 
+        axis.title.x = element_text(family="Times", face="bold", size=16, color="black"),
+        axis.text.y = element_text(family="Times", face="bold", size=12, color="black"),
+        axis.title.y = element_text(family="Times", face="bold", size=16, color="black"),
+        strip.text = element_text(size=10, face="bold"),
+        plot.title = element_text(size=20, face="bold"),
+        legend.title = element_blank(),
+        legend.text = element_text(family="Times", color = "black", size = 16,face="bold"),
+        legend.position="right")+
+  scale_x_datetime(date_labels = '%H:%M', 
+                   limits = c(as.POSIXct('1970-01-01 00:00:00', tz = 'UTC'), 
+                              as.POSIXct('1970-01-01 01:00:00', tz = 'UTC')), 
+                   breaks = '10 mins') +
+  labs(title = "Distribution of trip duration and average trip duration - Member riders", y= "count of trips", x= "trip duration")
+
+```
+
+
+### 5. What is the preferred station for starting trips?
+***
+
+#### Top ten start stations for member and casual riders
+
+```{r}
+# I printed the top ten start stations for member riders
+start_station_member <- BikeTrips_todos %>%
+  filter(member_casual == "member") %>%
+  count(start_station_name, sort = TRUE)
+
+start_station_member %>%
+print(n=11 )
+
+
+# I printed the top ten start stations for casual riders
+start_station_casual <- BikeTrips_todos %>%
+  filter(member_casual == "casual") %>%
+  count(start_station_name, sort = TRUE) 
+
+  start_station_casual %>%
+  print(n=11 )
+  
+```
+
+
+#### Top ten end stations for member and casual riders
+```{r}
+ # I printed the top ten end stations for casual riders
+
+end_station_casual <- BikeTrips_todos %>%
+  filter(member_casual == "casual") %>%
+  count(end_station_name, sort = TRUE) 
+
+end_station_casual %>%
+print(n = 11)
+
+
+# I printed the top ten end stations for member riders
+end_station_member <- BikeTrips_todos %>%
+  filter(member_casual == "member") %>%
+  count(end_station_name, sort = TRUE) 
+
+
+end_station_member %>%
+  print(n = 11)
+```
+
+### 6. How are the trip start points distributed geographically?
+***
+
+#### Range of starting latitude of trips
+```{r}
+max(BikeTrips_todos$start_lat)
+min(BikeTrips_todos$start_lat)
+```
+
+#### Histogram visualization of starting latitude of trips
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(BikeTrips_todos, aes(x=start_lat)) + geom_histogram(fill="#3aaca6", color="white") +
+  facet_wrap(~member_casual)+
+  theme_bw()+
+  theme(axis.text.x = element_text(hjust = 1,family="Times", face="bold", size=12, color="black"), 
+        axis.title.x = element_text(family="Times", face="bold", size=16, color="black"),
+        axis.text.y = element_text(family="Times", face="bold", size=12, color="black"),
+        axis.title.y = element_text(family="Times", face="bold", size=16, color="black"),
+        strip.text = element_text(size=10, face="bold"),
+        plot.title = element_text(size=20, face="bold"),
+        legend.title = element_blank(),
+        legend.text = element_text(family="Times", color = "black", size = 16,face="bold"),
+        legend.position="right")+
+  scale_x_continuous(limits = c(41.75, 42.1)) +
+  labs(title = "Distribution of starting latitude of trips for casual and member riders", y= "count of trips", x= "starting latitude")
+
+```
+
+#### Range of starting longitude of trips
+```{r}
+max(BikeTrips_todos$start_lng)
+min(BikeTrips_todos$start_lng)
+```
+
+#### Histogram visualization of starting longitude of trips
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(BikeTrips_todos, aes(x=start_lng)) + geom_histogram(fill="#3aaca6", color="white") +
+  facet_wrap(~member_casual)+
+  theme_bw()+
+  theme(axis.text.x = element_text(hjust = 1,family="Times", face="bold", size=12, color="black"), 
+        axis.title.x = element_text(family="Times", face="bold", size=16, color="black"),
+        axis.text.y = element_text(family="Times", face="bold", size=12, color="black"),
+        axis.title.y = element_text(family="Times", face="bold", size=16, color="black"),
+        strip.text = element_text(size=10, face="bold"),
+        plot.title = element_text(size=20, face="bold"),
+        legend.title = element_blank(),
+        legend.text = element_text(family="Times", color = "black", size = 16,face="bold"),
+        legend.position="right")+
+  scale_x_continuous(limits = c(-87.8, -87.55)) +
+  labs(title = "Distribution of starting longitude of trips for casual and member riders", y= "count of trips", x= "starting longitude")
+```
+
+#### Range of ending latitude of trips
+```{r}
+max(BikeTrips_todos$end_lat)
+min(BikeTrips_todos$end_lat)
+```
+
+#### Histogram visualization of ending latitude of trips
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(BikeTrips_todos, aes(x=end_lat)) + geom_histogram(fill="#3aaca6", color="white") +
+  facet_wrap(~member_casual)+
+  theme_bw()+
+  theme(axis.text.x = element_text(hjust = 1,family="Times", face="bold", size=12, color="black"), 
+        axis.title.x = element_text(family="Times", face="bold", size=16, color="black"),
+        axis.text.y = element_text(family="Times", face="bold", size=12, color="black"),
+        axis.title.y = element_text(family="Times", face="bold", size=16, color="black"),
+        strip.text = element_text(size=10, face="bold"),
+        plot.title = element_text(size=20, face="bold"),
+        legend.title = element_blank(),
+        legend.text = element_text(family="Times", color = "black", size = 16,face="bold"),
+        legend.position="right")+
+  scale_x_continuous(limits = c(41.70, 42.10)) +
+  labs(title = "Distribution of ending latitudes of trips for casual and member riders", y= "count of trips", x= "ending latitude")
+```
+
+
+
+
+
+#### Range of ending longitude of trips
+```{r}
+max(BikeTrips_todos$end_lng)
+min(BikeTrips_todos$end_lng)
+```
+
+#### Histogram visualization of ending longitude of trips
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(BikeTrips_todos, aes(x=end_lng)) + geom_histogram(fill="#3aaca6", color="white") +
+  facet_wrap(~member_casual)+
+  theme_bw()+
+  theme(axis.text.x = element_text(hjust = 1,family="Times", face="bold", size=12, color="black"), 
+        axis.title.x = element_text(family="Times", face="bold", size=16, color="black"),
+        axis.text.y = element_text(family="Times", face="bold", size=12, color="black"),
+        axis.title.y = element_text(family="Times", face="bold", size=16, color="black"),
+        strip.text = element_text(size=10, face="bold"),
+        plot.title = element_text(size=20, face="bold"),
+        legend.title = element_blank(),
+        legend.text = element_text(family="Times", color = "black", size = 16,face="bold"),
+        legend.position="right")+
+  scale_x_continuous(limits = c(-87.80, -87.55)) +
+  labs(title = "Distribution of ending longitudes of trips for casual and member riders", y= "count of trips", x= "ending longitude")
+```
