@@ -7,13 +7,15 @@
 }
 
 .navbar-brand {
-  color: black !important;
+  /*color: black !important; */
+  color: #848691 !important; 
     font-family: 'Montserrat', sans-serif;
     font-weight:bold;
 }
 
 .nav-link {
-  color: rgba(0, 0, 0, 255) !important;
+/*  color: rgba(0, 0, 0, 255) !important; */
+  color: rgba(132, 134, 145, 1)  !important; 
 }
 
 
@@ -53,7 +55,8 @@
 }
 
 .navbar-toggler {
-  border-color: rgba(0, 0, 0, 255) !important;
+/*  border-color: rgba(0, 0, 0, 255) !important; */
+  color: rgba(132, 134, 145, 1)  !important; 
   position: fixed;
   right: 3rem;
 }
