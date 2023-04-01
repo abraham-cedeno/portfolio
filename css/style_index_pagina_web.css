@@ -1,72 +1,66 @@
 
 /***********************************************NAV BAR*********************************/
 .navbar {
-  position: fixed;
   z-index: 1;
-  top: 1rem;
+  top: 0rem;
+  padding-top: 15px;
+  padding-bottom: 15px;
+background-color: #2e68b0 !important;
 }
 
 .navbar-brand {
-  /*color: black !important; */
-  color: #848691 !important; 
+ /* color: white !important;  */
+ /*color: #848691 !important; */
     font-family: 'Montserrat', sans-serif;
     font-weight:bold;
 }
 
 .nav-link {
-/*  color: rgba(0, 0, 0, 255) !important; */
-  color: rgba(132, 134, 145, 1)  !important; 
+ /*  color: rgba(255, 255, 255, 0.3) !important; */
+ color: rgba(255, 255, 255, 0.9) !important; 
 }
 
 
 #item-5{
-  position: fixed;
-  right: 3rem;
-  top: 1.5rem;
+  right:10rem;
+  font-size: 1.1rem;
 }
 
 #item-4{
-  position: fixed;
-  right: 13rem;
-  top: 1.5rem;
+  right: 15rem;
+  font-size: 1.1rem;
+
 }
 
 #item-3{
-  position: fixed;
-  right: 23rem;
-  top: 1.5rem;
+  right: 20rem;
+  font-size: 1.1rem;
 }
 
 #item-2{
-  position: fixed;
-  right: 33rem;
-  top: 1.5rem;
+  right: 25rem;
+  font-size: 1.1rem;
 }
 
 #item-1{
-  position: fixed;
-  right: 43rem;
-  top: 1.5rem;
+  right: 30rem;
+  font-size: 1.1rem;
 }
 
 
 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 255)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
+background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
 }
 
 .navbar-toggler {
-/*  border-color: rgba(0, 0, 0, 255) !important; */
-  color: rgba(132, 134, 145, 1)  !important; 
-  position: fixed;
+  border-color: rgba(255, 255, 255, 0.9) !important; 
+  color: rgba(255, 255, 255, 1) !important; 
   right: 3rem;
 }
 
 .ml-auto {
   text-align: center !important;
 }
-
-
-
 
 
 /***********************************************INICIO WHATSAPP*********************************/
