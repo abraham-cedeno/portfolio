@@ -467,7 +467,6 @@ left: 30px;
   padding-top: 0.75rem;
   /*  width:50%; */
   text-align: justify;
-  padding-left: 30px;
 }
 
 
@@ -1016,7 +1015,7 @@ display: inline-block;
 
 
 
-@media screen and (min-width:670px) and (max-width: 1344px) {
+@media screen and (min-width:750px) and (max-width: 1344px) {
   .middle-container{
     padding-left: 100px;
     padding-right:100px;
@@ -1058,45 +1057,92 @@ display: inline-block;
   }
 }
 
-@media screen and (min-width:100px) and (max-width: 670px) {
+
+@media screen and (min-width:100px) and (max-width: 890px) {
+.items {
+  display: block;
+  margin: 0;
+  padding: 0;}
+}
+
+
+@media screen and (min-width:100px) and (max-width: 750px) {
   .middle-container{
-    padding-left: 50px;
-    padding-right:50px;
-    padding-top:50px;
+    padding-left: 15px;
+    padding-right:15px;
+    padding-top:15px;
     padding-bottom:0px;
   }
   .middle-container2{
-    padding-left: 50px;
-    padding-right:50px;
-    padding-top:50px;
+    padding-left: 15px;
+    padding-right:15px;
+    padding-top:10px;
     padding-bottom:50px;
   }
   .middle-container3{
-    padding-left: 100px;
-    padding-right:50px;
-    padding-top:50px;
-    padding-bottom:50px;
+    padding-left: 15px;
+    padding-right:15px;
+    padding-top:15px;
+    padding-bottom:15px;
   }
 
   .carousel-inner{
-    padding-left: 50px;
-    padding-right:50px;
-    padding-top:50px;
-    padding-bottom:50px;
+    padding-left: 15px;
+    padding-right:15px;
+    padding-top:10px;
+    padding-bottom:30px;
   }
   div.contact-me{
-    padding-left: 50px;
-    padding-right:50px;
-    padding-top:50px;
-    padding-bottom:50px;
+    padding-left: 20px;
+    padding-right:20px;
+    padding-top:20px;
+    padding-bottom:30px;
   }
     
   div.bottom-container{
     padding-left: 50px;
     padding-right:50px;
-    padding-top:50px;
-    padding-bottom:50px;
+    padding-top:20px;
+    padding-bottom:20px;
   }
+
+div.img_wrap.snipcss0-4-72-73{
+  height: 320px;
+}
+
+div.img_wrap.snipcss0-4-83-84{
+  height: 320px;
+}
+
+div.img_wrap.snipcss0-4-94-95{
+  height: 320px;
+}
+
+div.img_wrap.snipcss0-4-105-106{
+  height: 320px;
+}
+
+div.img_wrap.snipcss0-4-116-117{
+  height: 320px;
+}
+
+div.img_wrap.snipcss0-4-127-128{
+  height: 320px;
+}
+
+.testimonial-text{
+font-size: 2.2rem;
+}
+
+.contact-message {
+  width:100%;
+  margin: 0px auto 30px;
+  text-align:justify;
+}
+
+p.pie{
+  color:#8DBFFC
+}
 }
 
 @media screen and (min-width:100px) and (max-width: 480px) {
@@ -1175,4 +1221,8 @@ div.title{
 }
 
 
-
+@media (max-width: 750px) {
+  .primera_seccion {
+    display: none;
+  }
+}
