@@ -82,13 +82,16 @@ hr {
   border-width: 6px;
 }
 
+ .primera_seccion {
+    display: none;}
+
 /***********************************************NAV BAR*********************************/
 .navbar {
   z-index: 1;
   top: 0rem;
   padding-top: 15px;
   padding-bottom: 15px;
-/*background-color: #2e68b0 !important;*/
+background-color: #2e68b0 !important; 
 }
 
 .navbar-brand {
@@ -446,7 +449,7 @@ left: 30px;
   padding-left: 150px;
   padding-right: 150px;
   /*padding-top: 100px; */
-  padding-top: 150px;
+  padding-top: 50px;
   padding-bottom: 100px;
 }
 
