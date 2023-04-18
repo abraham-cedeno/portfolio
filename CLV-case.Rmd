@@ -1,0 +1,1047 @@
+---
+title: "CLV"
+author: "Abraham Cedeño"
+date: "2023-04-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Section 1: Data preparation (Import, transform, sort and filter)
+***
+
+### Import libraries
+```{r, message=FALSE, warning=FALSE, results='hide'}
+library(car)
+library(ggcorrplot)
+library(tidyverse)
+library(stringr)
+library(ggpubr)
+library(knitr)
+library(MASS)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(lubridate)
+library(splines)
+library(mgcv)
+library(reshape2)
+library(gridExtra)
+library(lmPerm)
+library(caret)
+```
+
+
+```{r,echo=FALSE}
+dir1 <- "~"
+dir2 <- "Desktop"
+dir3 <- "AC"
+dir4 <- "Useful"
+dir5 <- "Carrer"
+dir6 <- "Skills "
+dir7 <- "3. Skills para trabajo"
+dir8 <- "10. R data science, statistics, machine learning"
+dir9 <- "Portfolio analysis" 
+dir10 <- "4. Customer Lifetime Value" 
+file_name  <- "Data"
+PSDS_PATH <- file.path(dir1, dir2, dir3, dir4, dir5, dir6, dir7, dir8, dir9, dir10, file_name)
+```
+
+
+### Import csv files as data frames
+```{r, results='hide', message=FALSE, warning=FALSE}
+Data <- read_csv(file.path(PSDS_PATH, 'dataset.csv'))
+rm(dir1,dir2,dir3,dir4,dir5,dir6,dir7,dir8,dir9,dir10,file_name,PSDS_PATH)
+```
+
+
+## Section 2: Data process (clean)
+***
+
+### Explore the data frame
+
+```{r}
+str(Data)
+```
+
+### Duplicates
+```{r}
+duplicates <- duplicated(Data$Customer)
+num_true <- sum(duplicates)
+print(num_true)
+remove(duplicates,num_true)
+```
+We can conclude that there are no duplicates.
+
+
+### Rename columns
+```{r}
+Data <- Data %>% 
+rename(Customer_Lifetime_Value=`Customer Lifetime Value`,
+       Effective_To_Date=`Effective To Date`,
+       Location_Code=`Location Code`,
+       Employment_Status=EmploymentStatus,
+       Marital_Status=`Marital Status`,
+       Monthly_Premium_Auto=`Monthly Premium Auto`,
+       Months_Since_Last_Claim=`Months Since Last Claim`,
+       Months_Since_Policy_Inception=`Months Since Policy Inception`,
+       Number_of_Open_Complaints=`Number of Open Complaints`,
+       Number_of_Policies=`Number of Policies`,
+       Policy_Type=`Policy Type`,
+       Renew_Offer_Type=`Renew Offer Type`,
+       Sales_Channel=`Sales Channel`,
+       Total_Claim_Amount=`Total Claim Amount`,
+       Vehicle_Class=`Vehicle Class`,
+       Vehicle_Size=`Vehicle Size`)
+```
+
+### Convert "Effective to Date" from CHR data type to DATE data type
+```{r, results='hide', message=FALSE, warning=FALSE}
+Data <- Data %>%
+  mutate(`Effective_To_Date`=mdy(`Effective_To_Date`))
+```
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+Data$Effective_Days <- weekdays(Data$`Effective_To_Date`)
+Data$Effective_Days <- factor(Data$Effective_Days, c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+```
+
+
+```{r,echo=FALSE}
+dir1 <- "~"
+dir2 <- "Desktop"
+dir3 <- "AC"
+dir4 <- "Useful"
+dir5 <- "Carrer"
+dir6 <- "Skills "
+dir7 <- "3. Skills para trabajo"
+dir8 <- "10. R data science, statistics, machine learning"
+dir9 <- "Portfolio analysis" 
+dir10 <- "4. Customer Lifetime Value" 
+file_name  <- "Data"
+PSDS_PATH <- file.path(dir1, dir2, dir3, dir4, dir5, dir6, dir7, dir8, dir9, dir10, file_name)
+
+
+write.csv(Data,file.path(PSDS_PATH, 'dataset_from_r.csv'),row.names=FALSE)
+rm(dir1,dir2,dir3,dir4,dir5,dir6,dir7,dir8,dir9,dir10,file_name,PSDS_PATH)
+```
+
+
+
+
+## Section 3: Exploratory Data Analysis
+
+### Univariate analysis
+Analyze each predictor variable individually to understand its distribution and identify any potential outliers or data issues.
+
+a. Histograms: Create histograms to visualize the distribution of each continuous predictor variable.
+
+b. Box plots: Use box plots to identify the range, quartiles, and potential outliers of continuous predictor variables.
+
+c. Bar plots: Create bar plots for categorical predictor variables to visualize the frequency of each category.
+
+d. Summary statistics: Calculate summary statistics, such as mean, median, standard deviation, and quartiles, to describe the central tendency and dispersion of each continuous predictor variable.
+
+
+#### Categorical Data - Bar plots
+```{r,echo=FALSE}
+dir1 <- "~"
+dir2 <- "Desktop"
+dir3 <- "AC"
+dir4 <- "Archive"
+dir5 <- "Web development course"
+dir6 <- "Nuevo diseño CV mejorado mobile"
+file_name  <- "images"
+PSDS_PATH <- file.path(dir1, dir2, dir3, dir4, dir5, dir6, file_name)
+
+knitr::include_graphics(file.path(PSDS_PATH, 'Categorical_Report 1.png'))
+knitr::include_graphics(file.path(PSDS_PATH, 'Categorical_Report 2.png'))
+```
+
+
+#### Numerical Data  - Histograms
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'Numerical_Report.png'))
+```
+
+#### Numerical Data  - Boxplots
+
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'Numerical_Report2.png'))
+```
+
+
+
+
+### Bivariate analysis
+Analyze the relationship between each predictor variable and the target variable.
+
+a. Scatter plots: Plot scatter plots between continuous predictor variables and the target variable to visualize the relationships and identify any trends or patterns.
+
+b. Box plots or violin plots: Use box plots or violin plots to visualize the distribution of the target variable across different categories of a categorical predictor variable.
+
+c. Correlation matrix: Calculate the correlation matrix for continuous predictor variables to identify any strong linear relationships with the target variable.
+
+
+#### Categorical Data - Box plots
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'Bivariate_Categorical_Report_1.png'))
+knitr::include_graphics(file.path(PSDS_PATH, 'Bivariate_Categorical_Report_2.png'))
+knitr::include_graphics(file.path(PSDS_PATH, 'Bivariate Categorical Report 3.png'))
+knitr::include_graphics(file.path(PSDS_PATH, 'Bivariate Categorical Report 4.png'))
+```
+
+
+#### Numerical Data - Scatter plots
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'Bivariate Numerical Report 5.png'))
+```
+
+
+#### Numerical Continuous Data - Correlation matrix
+
+CLV = Customer Lifetime Value
+
+INC = Income
+
+MPA = Monthly Premium Auto
+
+TCA = Total Claim Amount
+
+```{r, echo=FALSE}
+#Create a dataframe with the variables that I want to calculate the correlation matrix for.
+Data_only_continuous_variables <- data.frame(Data$Customer_Lifetime_Value,Data$Income,Data$Monthly_Premium_Auto, Data$Total_Claim_Amount)
+
+#Calculte the correlation matrix
+Data_cor <- cor(Data_only_continuous_variables)
+
+#Change columna names and rownames
+#CLV = Customer Lifetime Value
+#INC = Income
+#MPA = Monthly Premium Auto
+#TCA = Total Claim Amount
+# Change column names
+colnames(Data_cor) <- c("CLV", "INC", "MPA", "TCA")
+
+# Change row names
+rownames(Data_cor) <- c("CLV", "INC", "MPA", "TCA")
+
+
+ggcorrplot(Data_cor, method = "circle", lab = TRUE)
+```
+
+As CLV has a high correlation with MPA, We decided to study how other categorical values affect MPA.
+
+#### Monthly Premium Auto vs categorical values
+
+
+##### Relationship for Education
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'compare-Education.png'))
+```
+
+##### Relationship for Coverage
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'compare-Coverage.png'))
+```
+
+##### Relationship for Employment Status
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'compare-Status.png'))
+```
+
+##### Relationship for Gender
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'compare-Gender.png'))
+```
+
+##### Relationship for Location
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'compare-Location.png'))
+```
+
+##### Relationship for Marital
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'compare-Marital.png'))
+```
+
+
+##### Relationship for Policy
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'compare-Policy.png'))
+```
+
+
+##### Relationship for Policy Type
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'compare-Policy type.png'))
+```
+
+##### Relationship for Renew Offer
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'compare-Renew Offer.png'))
+```
+
+
+##### Relationship for Renew Offer
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'compare-Response.png'))
+```
+
+##### Relationship for Channel
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'compare-Channel.png'))
+```
+##### Relationship for Vehicle Class
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'compare-Vehicle Class.png'))
+```
+
+
+
+
+##### Relationship for Size
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'compare-Size.png'))
+```
+
+##### Compare Complaints
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'compare-Complaints.png'))
+```
+
+##### Compare Number of Policies
+```{r,echo=FALSE}
+knitr::include_graphics(file.path(PSDS_PATH, 'compare-Number of Policies.png'))
+```
+
+
+
+
+
+
+
+
+
+
+## Section 4: Statistical Analysis
+In this section, we will perform a concise statistical analysis to select the most relevant predictors for our regression model. The steps involved in this process are as follows:
+
+1. Multicollinearity assessment: Check for correlations among predictor variables to ensure stability and reliability in the regression model.
+
+2. Bivariate analysis: Investigate associations between each predictor and the target variable using correlation coefficients and hypothesis tests.
+
+3. Feature selection: Employ techniques like stepwise regression, LASSO, or Ridge regression to systematically choose the optimal subset of predictors.
+
+4. Visualizations: Leverage graphical representations to effectively communicate findings and support informed decision-making.
+
+By following these steps, we will identify a suitable set of predictor variables that contribute meaningfully to our regression model's performance. 
+
+### Hypothesis testing - Categorical Values - ANOVA test and Simple linear regression
+
+#### State
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ State, data=Data))
+```
+
+#### Response
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ Response, data=Data))
+```
+#### Location_Code
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ Location_Code, data=Data))
+```
+
+#### Marital_Status
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ Marital_Status, data=Data))
+```
+
+```{r, echo=FALSE}
+model_Marital_Status <- lm(Customer_Lifetime_Value ~ Marital_Status, data=Data)
+model_Marital_Status
+
+summary(model_Marital_Status)
+```
+
+
+#### Coverage
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ Coverage, data=Data))
+```
+```{r, echo=FALSE}
+model_Coverage <- lm(Customer_Lifetime_Value ~ Coverage, data=Data)
+model_Coverage
+
+summary(model_Coverage)
+```
+
+
+#### Education
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ Education, data=Data))
+```
+```{r, echo=FALSE}
+model_Education <- lm(Customer_Lifetime_Value ~ Education, data=Data)
+model_Education
+
+summary(model_Education)
+```
+
+
+
+#### Employment Status
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ Employment_Status, data=Data))
+```
+
+```{r, echo=FALSE}
+model_Employment_Status <- lm(Customer_Lifetime_Value ~ Employment_Status, data=Data)
+model_Employment_Status
+
+summary(model_Employment_Status)
+```
+
+
+
+#### Gender
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ Gender, data=Data))
+```
+```{r, echo=FALSE}
+model_Gender <- lm(Customer_Lifetime_Value ~ Gender, data=Data)
+model_Gender
+
+summary(model_Gender)
+```
+
+
+#### Policy Type
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ Policy_Type, data=Data))
+```
+
+#### Policy
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ Policy, data=Data))
+```
+
+#### Vehicle Class
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ Vehicle_Class, data=Data))
+```
+```{r, echo=FALSE}
+model_Vehicle_Class <- lm(Customer_Lifetime_Value ~ Vehicle_Class, data=Data)
+model_Vehicle_Class
+
+summary(model_Vehicle_Class)
+```
+
+
+#### Vehicle Size
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ Vehicle_Size, data=Data))
+```
+```{r, echo=FALSE}
+model_Vehicle_Size <- lm(Customer_Lifetime_Value ~ Vehicle_Size, data=Data)
+model_Vehicle_Size
+
+summary(model_Vehicle_Size)
+```
+
+
+
+#### Renew Offer Type
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ Renew_Offer_Type, data=Data))
+```
+
+```{r, echo=FALSE}
+model_Renew_Offer_Type <- lm(Customer_Lifetime_Value ~ Renew_Offer_Type, data=Data)
+model_Renew_Offer_Type
+
+summary(model_Renew_Offer_Type)
+```
+
+
+#### Sales Channel
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ Sales_Channel, data=Data))
+```
+
+```{r, echo=FALSE}
+model_Sales_Channel <- lm(Customer_Lifetime_Value ~ Sales_Channel, data=Data)
+model_Sales_Channel
+
+summary(model_Sales_Channel)
+```
+
+
+
+
+
+
+
+
+#### Effective To Date
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ Effective_Days, data=Data))
+```
+
+
+
+#### Number_of_Open_Complaints
+```{r, echo=FALSE}
+set.seed(121)
+summary(aovp(Customer_Lifetime_Value ~ Number_of_Open_Complaints, data=Data))
+```
+
+```{r, echo=FALSE}
+model_Number_of_Open_Complaints <- lm(Customer_Lifetime_Value ~ Number_of_Open_Complaints, data=Data)
+model_Number_of_Open_Complaints
+
+summary(model_Number_of_Open_Complaints)
+```
+
+
+
+
+
+
+### Simple linear regression - Numerical Values
+
+#### Months Since Policy Inception
+```{r, echo=FALSE}
+model_Months_Since_Policy_Inception <- lm(Customer_Lifetime_Value ~ Months_Since_Policy_Inception, data=Data)
+model_Months_Since_Policy_Inception
+
+summary(model_Months_Since_Policy_Inception)
+```
+
+
+
+#### Income
+```{r, echo=FALSE}
+model_Income <- lm(Customer_Lifetime_Value ~ Income, data=Data)
+model_Income
+
+summary(model_Income)
+```
+
+#### Monthly Premium Auto
+```{r, echo=FALSE}
+model_Monthly_Premium_Auto <- lm(Customer_Lifetime_Value ~ Monthly_Premium_Auto, data=Data)
+model_Monthly_Premium_Auto
+
+summary(model_Monthly_Premium_Auto)
+```
+
+
+#### Months Since Last Claim
+```{r, echo=FALSE}
+model_Months_Since_Last_Claim <- lm(Customer_Lifetime_Value ~ Months_Since_Last_Claim, data=Data)
+model_Months_Since_Last_Claim
+
+summary(model_Months_Since_Last_Claim)
+```
+
+#### Number_of_Policies
+```{r, echo=FALSE}
+model_Number_of_Policies <- lm(Customer_Lifetime_Value ~ Number_of_Policies, data=Data)
+model_Number_of_Policies
+
+summary(model_Number_of_Policies)
+```
+
+
+
+
+
+#### Total Claim Amount
+```{r, echo=FALSE}
+model_Total_Claim_Amount <- lm(Customer_Lifetime_Value ~ Total_Claim_Amount, data=Data)
+model_Total_Claim_Amount
+
+summary(model_Total_Claim_Amount)
+```
+
+## Section 5: Predictive model
+
+### Step by step to build the Multiple Regression Model
+
+#### 1. Splitting data, training and holdout sets
+```{r, result = 'hide'}
+#Split the data into training and holdout sets using a 90-10 split
+set.seed(123)
+trainIndex <- createDataPartition(Data$Customer_Lifetime_Value, p=0.8, list = FALSE)
+trainData <- Data[trainIndex, ]
+holdoutData <- Data[-trainIndex, ]
+```
+
+
+#### 2. Create the model based on training data
+```{r, echo=FALSE}
+#Create a multiple linear regression model on trainData
+Data_lm <- lm(Customer_Lifetime_Value ~Coverage + Vehicle_Class + Monthly_Premium_Auto + Total_Claim_Amount ,data=trainData, na.action=na.omit)
+
+summary(Data_lm)
+```
+
+
+
+#### 3. Calculating the Variance Inflation Factor for each feature
+```{r, echo=FALSE}
+#Calculating the VIF for each feature
+vif_values <- vif(Data_lm)
+print(vif_values)
+```
+The Monthly Premium Auto has a VIF adjusted higher than 5 that indicates some multicollienarity. To adress that We will use the Stepwise regression to select the appropiate features.
+
+
+#### 4. Model selection and Stepwise regression
+```{r, echo=FALSE}
+step_lm <- stepAIC(Data_lm, direction="both")
+step_lm
+
+summary(step_lm)
+```
+Only 2 features were left: Monthly_Premium_Auto and Total_Claim_Amount.
+
+
+#### 5. Outliers analysis based on Standard Residual
+```{r, results= 'hide'}
+#Eliminate outliers that are more than 2.5 standard residuals
+sresid <- rstandard(step_lm)
+idx <- order(sresid, decreasing=TRUE)
+sresid[idx[325]]
+resid(step_lm)[idx[1]]
+outlier_record <- trainData[idx[1], c('Monthly_Premium_Auto', 'Total_Claim_Amount')]
+trainData$sresid <- rstandard(step_lm)
+
+#trainData <- trainData %>%
+ # filter(sresid < 2.5) %>%
+  #filter(sresid > -2.5)
+```
+Despite numerous records surpassing the 2.5 standard deviation benchmark, we have opted against data exclusion, as a significant proportion adheres to this threshold. Removing these records may potentially compromise the integrity of our model.
+
+
+
+#### 6. 10 fold cross validation model
+
+```{r, echo=FALSE}
+set.seed(123)
+
+#Perform 10 cross fold validation
+cv <- trainControl(method = "cv", number =10)
+cv_model <- train(Customer_Lifetime_Value ~ Monthly_Premium_Auto + Total_Claim_Amount ,data=trainData, method ="lm", trControl = cv)
+
+# Print the cross-validation results
+cv_model$resample
+
+print(cv_model)
+
+#Extract the final linear regression model from the 'train' object:
+final_model <- cv_model$finalModel
+
+single_lm <- lm(Customer_Lifetime_Value ~ Monthly_Premium_Auto + Total_Claim_Amount, data = trainData)
+summary(single_lm)
+```
+
+#### 7. Calculating the Variance Inflation Factor for each feature in the cross validation model
+
+```{r, echo=FALSE}
+#Calculating the VIF for each feature
+vif_values_cv <- vif(final_model)
+print(vif_values_cv)
+```
+
+
+### Assessing the model on new data (holdout sample)
+```{r, echo=FALSE}
+### Assessing the stepwise regression model vs the cross validation model on the holdout set
+holdoutData$predicted_target_variable <- predict(cv_model, newdata = holdoutData)
+
+rmse <- RMSE(holdoutData$Customer_Lifetime_Value, holdoutData$predicted_target_variable)
+
+r_squared <- cor(holdoutData$Customer_Lifetime_Value, holdoutData$predicted_target_variable) ^ 2 
+
+cat("RMSE:", rmse, "\n")
+
+cat("R-squared", r_squared, "\n")
+```
+The model performs even better on data it haven't seem before.
+
+### Visualizing the absolute value of the residuals vs the predicted values
+```{r, echo=FALSE}
+### Heteroskedasticity
+
+df <- data.frame(
+  resid = residuals(cv_model),
+  pred = predict(cv_model))
+
+graph <- ggplot(df, aes(pred, abs(resid))) +
+  geom_point() +
+  geom_smooth(formula=y~x, method='loess') +
+  scale_x_continuous(labels = function(x) format(x, scientific = FALSE)) +
+  theme_bw()
+graph
+```
+
+
+### Visualizing Observed vs predicted values on holdout sample
+
+
+```{r,echo=FALSE, warning=FALSE}
+# Extract the first 25 rows
+holdoutData_subset <- head(holdoutData, 25)
+
+# Reshape the data
+library(tidyr)
+holdoutData_long <- holdoutData_subset %>%
+  dplyr::select(Customer_Lifetime_Value, predicted_target_variable) %>%
+  mutate(id = row_number()) %>%
+  tidyr::gather(key = "variable", value = "value", -id)
+
+
+
+# Create the bar plot
+plot <- ggplot(holdoutData_long, aes(x = factor(id), y = value, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  theme_minimal() +
+  labs(title = "Comparison of Customer Lifetime Value and Predicted Target Variable",
+       x = "Row ID",
+       y = "Value",
+       fill = "Variable") +
+  scale_fill_manual(values = c("Customer_Lifetime_Value" = "#F8766D", "predicted_target_variable" = "#00BFC4")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Display the plot
+print(plot)
+```
+
+
+
+
+
+
+
+### Visualizing the standard residuals
+
+```{r, echo=FALSE}
+std_resid <- rstandard(final_model)
+
+hist(std_resid, main='')
+```
+
+
+
+### Visualizing the Partial Residual Plots
+```{r, echo=FALSE}
+# Partial Residual Plots and Nonlinearity
+
+terms <- predict(final_model, type='terms')
+partial_resid <- resid(final_model) + terms
+
+df <- data.frame(Monthly_Premium_Auto = trainData[, 'Monthly_Premium_Auto'],
+                 Terms = terms[, 'Monthly_Premium_Auto'],
+                 PartialResid = partial_resid[, 'Monthly_Premium_Auto'])
+graph <- ggplot(df, aes(Monthly_Premium_Auto, PartialResid)) +
+  geom_point(shape=1) + scale_shape(solid = FALSE) +
+  geom_smooth(linetype=2, formula=y~x, method='loess') + 
+  geom_line(aes(Monthly_Premium_Auto, Terms)) + 
+  scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
+graph
+
+df2 <- data.frame(Total_Claim_Amount = trainData[, 'Total_Claim_Amount'],
+                 Terms = terms[, 'Total_Claim_Amount'],
+                 PartialResid = partial_resid[, 'Total_Claim_Amount'])
+graph <- ggplot(df2, aes(Total_Claim_Amount, PartialResid)) +
+  geom_point(shape=1) + scale_shape(solid = FALSE) +
+  geom_smooth(linetype=2, formula=y~x, method='loess') + 
+  geom_line(aes(Total_Claim_Amount, Terms)) + 
+  scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
+graph
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Regression model based only on number of policies different than 2
+Previously, We found that only when number of policies is 2 the relationship between Customer_Lifetime_Value (target value) and Monthly_Premium_Auto (a feature) vary hugely. We suspect that the model could improve it's accuaracy by filtering to exclude those records.
+
+#### 1. Filter the data to have Number_of_Policies different than 2
+```{r, result = 'hide'}
+#Split the data into training and holdout sets using a 80-20 split
+
+Data_filtered <- Data %>%
+  filter(Number_of_Policies != 2)
+
+set.seed(123)
+trainIndex_filtered <- createDataPartition(Data_filtered$Customer_Lifetime_Value, p=0.8, list = FALSE)
+trainData_filtered <- Data_filtered[trainIndex_filtered, ]
+holdoutData_filtered <- Data_filtered[-trainIndex_filtered, ]
+```
+
+#### 2. Create the model based on training data
+```{r, echo=FALSE}
+#Create a multiple linear regression model on trainData
+Data_lm_filtered <- lm(Customer_Lifetime_Value ~ Monthly_Premium_Auto + Total_Claim_Amount ,data=trainData_filtered, na.action=na.omit)
+
+summary(Data_lm_filtered)
+```
+
+```{r, echo=FALSE, results='hide'}
+#Calculating the VIF for each feature
+vif_values_filtered <- vif(Data_lm_filtered)
+print(vif_values_filtered)
+```
+
+```{r, echo=FALSE, results='hide'}
+step_lm_filtered <- stepAIC(Data_lm_filtered, direction="both")
+step_lm_filtered
+
+summary(step_lm_filtered)
+```
+
+```{r, echo=FALSE, results='hide'}
+#Eliminate outliers that are more than 2.5 standard residuals
+sresid <- rstandard(step_lm_filtered)
+idx <- order(sresid, decreasing=FALSE)
+sresid[idx[1]]
+resid(step_lm)[idx[1]]
+outlier_record_filtered <- trainData[idx[1], c('Monthly_Premium_Auto', 'Total_Claim_Amount')]
+trainData_filtered$sresid <- rstandard(step_lm_filtered)
+
+#trainData <- trainData %>%
+ # filter(sresid < 2.5) %>%
+  #filter(sresid > -2.5)
+```
+
+#### 10 fold cross validation model
+
+```{r, echo=FALSE}
+set.seed(123)
+
+#Perform 10 cross fold validation
+cv_filtered <- trainControl(method = "cv", number =10)
+cv_model_filtered <- train(Customer_Lifetime_Value ~ Monthly_Premium_Auto + Total_Claim_Amount ,data=trainData_filtered, method ="lm", trControl = cv)
+
+# Print the cross-validation results
+cv_model_filtered$resample
+
+print(cv_model_filtered)
+
+#Extract the final linear regression model from the 'train' object:
+final_model_filtered <- cv_model_filtered$finalModel
+```
+
+### Assessing the model on new data (holdout sample)
+```{r, echo=FALSE}
+### Assessing the stepwise regression model vs the cross validation model on the holdout set
+holdoutData_filtered$predicted_target_variable <- predict(cv_model_filtered, newdata = holdoutData_filtered)
+
+rmse_filtered <- RMSE(holdoutData_filtered$Customer_Lifetime_Value, holdoutData_filtered$predicted_target_variable)
+
+r_squared_filtered <- cor(holdoutData_filtered$Customer_Lifetime_Value, holdoutData_filtered$predicted_target_variable) ^ 2 
+
+cat("RMSE:", rmse_filtered, "\n")
+
+cat("R-squared", r_squared_filtered, "\n")
+
+```
+The model performs even better on data it haven't seem before.
+
+### Visualizing the absolute value of the residuals vs the predicted values
+```{r, echo=FALSE}
+### Heteroskedasticity
+
+df <- data.frame(
+  resid = residuals(cv_model_filtered),
+  pred = predict(cv_model_filtered))
+
+graph <- ggplot(df, aes(pred, abs(resid))) +
+  geom_point() +
+  geom_smooth(formula=y~x, method='loess') +
+  scale_x_continuous(labels = function(x) format(x, scientific = FALSE)) +
+  theme_bw()
+graph
+```
+
+
+### Visualizing Observed vs predicted values on holdout sample
+
+```{r,echo=FALSE, warning=FALSE}
+
+# Extract the first 25 rows
+holdoutData_subset <- head(holdoutData_filtered, 25)
+
+# Reshape the data
+library(tidyr)
+holdoutData_long <- holdoutData_subset %>%
+  dplyr::select(Customer_Lifetime_Value, predicted_target_variable) %>%
+  mutate(id = row_number()) %>%
+  tidyr::gather(key = "variable", value = "value", -id)
+
+
+
+# Create the bar plot
+plot <- ggplot(holdoutData_long, aes(x = factor(id), y = value, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  theme_minimal() +
+  labs(
+       x = "Row ID",
+       y = "Value",
+       fill = "Variable") +
+  scale_fill_manual(values = c("Customer_Lifetime_Value" = "#F8766D", "predicted_target_variable" = "#00BFC4")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Display the plot
+print(plot)
+
+```
+
+
+
+
+
+
+
+
+
+
+## Section 6: Observations
+
+1. A strong relationship between the coverage (Basic, Extended, or Premium) and CLV exists, with higher CLV for more premium coverages.
+
+2. Vehicle Class also impacts CLV, with luxury cars having higher CLV.
+
+3. Monthly Premium Auto, the amount paid monthly for auto insurance, had the strongest correlation to CLV.
+
+4. An inverse correlation was observed between Total Claim Amount and CLV.
+
+5. The Number of Policies feature showed that customers with two policies had significantly higher CLV, affecting linearity.
+
+6. Due to multicollinearity between Coverage, Vehicle Class, and Monthly Premium Auto, only the most promising feature (Monthly Premium Auto) was retained for the model.
+
+
+
+## Section 7: Conclusion and Recommendation
+Our first model had an RMSE of 6433.889 and an R-squared of 0.1738 on the holdout sample. Although not highly accurate, the model's coefficients can help make informed business decisions to increase CLV.
+
+The second model performed better with an RMSE of 1921.308 and an R-Squared of 0.5151. The improved performance was due to the identification of an irregular behavior associated with customers having two policies. We recommend investigating this behavior to determine the cause, such as a special offer for purchasing two policies. By understanding and addressing this issue, we can develop an even more accurate model to predict CLV.
+
+
+
+```{r,echo=FALSE}
+#In the context of analyzing customer lifetime value (CLV) for a car company, the features "Monthly premium auto" and "number of policies" likely have the following meanings:
+
+#1. Monthly premium auto: This is the amount that a customer pays on a monthly basis for their auto insurance policy. A premium is the price that the customer pays to the insurance provider in exchange for coverage. The cost of the premium is determined by various factors such as the customer's age, driving history, location, and type of vehicle. In your analysis, the monthly premium auto feature would be an important factor in determining the customer's contribution to the company's revenue over their lifetime.
+
+#2. Number of policies: This refers to the total number of insurance policies that a customer has purchased from the car company. These policies could include auto insurance, as well as other types of insurance such as home or life insurance, if the company offers them. The number of policies a customer has could be an indicator of their loyalty and their overall value to the company. In the context of CLV, this feature would help you understand the customer's relationship with the company, their potential cross-selling opportunities, and the possibility of upselling additional policies or services.
+
+#By examining these features in your data set, you can better understand the customer lifetime value for the car company and identify patterns or trends that can inform business strategies for customer acquisition, retention, and revenue growth.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Total claim amount refers to the cumulative amount of money that an insurance company has paid to a customer in response to their submitted claims. A claim is a request made by the policyholder to the insurance company for compensation or coverage when they experience a loss or damage covered by their policy.
+
+#In the context of analyzing customer lifetime value (CLV) for a car company, the total claim amount is important because it represents a cost to the company. When evaluating CLV, it's essential to consider both the revenue generated by a customer (e.g., through premiums and number of policies) and the costs associated with servicing that customer, such as paying out claims.
+
+#A high total claim amount for a customer may indicate that they are more expensive to insure, which could reduce their overall lifetime value to the company. On the other hand, customers with low total claim amounts may be more profitable for the company, as they generate revenue through premiums without incurring significant costs through claim payouts.
+
+#By including total claim amount in your analysis, you can gain a more comprehensive understanding of a customer's net value to the company over time, which can help inform business strategies for customer segmentation, targeted marketing, and risk management.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#The number of policies refers to the total count of insurance policies that a customer has purchased from the car company. These policies could include not only auto insurance but also other types of insurance such as home or life insurance if the company offers them.
+
+#In the context of analyzing customer lifetime value (CLV) for a car company, the number of policies a customer has is an important factor for several reasons:
+
+#Customer loyalty: A higher number of policies held by a customer may indicate a stronger relationship with the company, as the customer trusts the company for multiple insurance needs. Loyal customers are more likely to remain with the company and continue purchasing policies, contributing to a higher CLV.
+
+#Cross-selling opportunities: Customers with multiple policies represent successful cross-selling efforts, which involve offering additional products or services to an existing customer. A high number of policies may indicate that the company has effectively marketed and sold its offerings to the customer.
+
+#Revenue generation: The more policies a customer has, the more premiums they pay, which contributes to the company's revenue. An increased number of policies can result in a higher CLV as the customer's revenue contribution grows.
+
+#Risk diversification: A customer with multiple policies may help the company to diversify its risk, especially if the policies cover different types of assets or risks.
+
+#By including the number of policies in your CLV analysis, you can gain insights into customer loyalty, the effectiveness of the company's cross-selling efforts, and the overall contribution of customers to the company's revenue. This information can help you identify valuable customers and create targeted marketing strategies to retain them, upsell additional policies or services, and attract similar customers.
+```
+
+
+
+
+
