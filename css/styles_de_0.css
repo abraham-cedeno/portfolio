@@ -148,6 +148,9 @@ background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32
   text-align: center !important;
 }
 
+.yellow {
+  color: #FFC220;
+}
 
 /***********************************************NAV BAR para celular*********************************/
 
@@ -237,6 +240,10 @@ height: auto;
 .nombre {
   color: black;
 }
+
+.about2 {
+  color: black;
+} 
 
   .titulo{
     color: black;}
@@ -443,6 +450,18 @@ left: 30px;
 
 
 /*********************************************INICIO SECCIÓN 2****************/
+.headline-container{
+  position: relative;
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-top: 50px;
+}
+
+.color{
+  
+}
+
+
 .middle-container {
   position: relative;
   background-color: #fff;
@@ -481,6 +500,7 @@ left: 30px;
 
 
 /*********************************************Inicio SECCIÓN 3****************/
+
 .middle-container2 {
   position: relative;
   background-color: #fff;
@@ -725,7 +745,7 @@ h3:after  {
 } 
 
 .project_box .desc_box .title  { 
-    font-size: 40px; 
+    font-size: 30px; 
     font-family: Helvetica, sans-serif; 
     font-weight: 800; 
     letter-spacing: -2px;
@@ -1010,6 +1030,14 @@ display: inline-block;
 
 
 @media screen and (min-width:750px) and (max-width: 1344px) {
+  .headline-container{
+    position: relative;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 50px;
+    
+  }
+
   .middle-container{
     padding-left: 100px;
     padding-right:100px;
@@ -1061,6 +1089,13 @@ display: inline-block;
 
 
 @media screen and (min-width:100px) and (max-width: 750px) {
+  .headline-container{
+    position: relative;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top:15px;
+  }
+
   .middle-container{
     padding-left: 15px;
     padding-right:15px;
