@@ -97,18 +97,14 @@
 
 <div class="desc_box2 snipcss-r7xWC">
   <div class="title">
-    Solución de Inteligencia de negocios
+    Cómo Crear Dashboards Fascinantes que Capturen Miradas
     <span class="blue">
       .
     </span>
   </div>
-  
-  
-  <div class="subtitle">
-    Construcción de dashboard
-  </div>
+
   <div class="tags">
-    AdventureWorks - Ventas
+    Power BI
   </div>
 </div>
 
@@ -146,230 +142,149 @@
         <a class="project_url" href="https://github.com/abraham-cedeno/Power-Bi-AdventureWorks.git">
           https://github.com/abraham-cedeno/Power-Bi-AdventureWorks.git
         </a>
-      </p>
-      <h2>Sobre el proyecto</h2>
-      <div class="blue_line snipcss-V6C8f">
-      </div>
 
-      <p>
-        En este proyecto, trabajaré como analista de datos para la compañía ficticia AdventureWorks. Se me ha proporcionado un conjunto de     
-        datos y se me pide diseñar una solución integral de inteligencia empresarial. Para lograrlo, utilizaré principalmente la herramienta de
-        <b>Power Bi.</b> 
-        ¡Empecemos!
-      </p>
-   
-
-      <h2>Sobre AdventureWorks</h2>
-
-      <div class="blue_line snipcss-V6C8f">
-      </div>
-
-      <p>
-        AdventureWorks es una empresa de fabricación mundial que se ha dado cuenta de lo importante que es el análisis de datos para la toma de decisiones. La empresa necesita una forma de <b>darle seguimiento a sus KPIs</b> (ventas, ingresos, ganancias, retornos).
-      </p>
-      <p>
-       Lo único que se me ha proporcionado para crear esta solución integral es un folder con archivos csv sin procesar. Estos archivos contienen información sobre las <b>transacciones, retornos, productos, clientes y territorios</b>.
-      </p>
-      <div class="video_section">
-        <div class="video">
-          <img src="images/Business_case3.png" class="bikes1">
-        </div>
-      </div>
-
-
-      <h2>Acciones tomadas</h2>
-  
-      <div class="blue_line snipcss-V6C8f">
-      </div>
-
-      <p>
-        <ol>
-          <li> <b>Definición del business task: </b> Lo primero que se hizo fue examinar el input de los Stakeholders para determinar cuál era el business task. </li>
-          <li> <b>Estudio de la data: </b> La siguiente acción fue estudiar las propiedades de la data (tipo y características) y su contexto (metadatos y origen). De esta forma se determinó que la data era de calidad y que no tenía bias.</li>
-          <li> <b>Importación y transformación de datos: </b> Luego de haber estudiado las propiedades de la data, se procedió a importarla y transformarla para asegurar su calidad y prepararla para su posterior análisis. Se utilizó la herramienta de Power Query para este proceso, asegurándose de que los datos estén limpios, completos y estructurados correctamente.</li>
-          <li> <b>Construcción de un modelo de datos relacional:</b> Una vez que se tenía la data preparada, se construyó un modelo de datos relacional para organizar la información de forma coherente y lógica. Se definieron las tablas y relaciones necesarias para reflejar las entidades y sus interacciones en el mundo real.</li>
-          <li> <b>Creación de nuevas columnas calculadas y medidas DAX: </b> Después de haber construido el modelo de datos relacional, se procedió a crear nuevas columnas calculadas y medidas DAX para realizar cálculos y análisis avanzados. Se utilizaron las funciones adecuadas para cada caso y se validaron los resultados para asegurar su precisión.</li>  
-          <li> <b>Diseñar un reporte interactivo: </b> Finalmente, se diseñó un reporte interactivo para presentar la información de forma visual y fácilmente comprensible. Se utilizó una herramienta de BI para crear visualizaciones y gráficos que permitieran a los usuarios explorar la data de manera intuitiva y encontrar patrones y tendencias relevantes. </li>
-        </ol>
-      </p>
-
-
-
-
-
-
-      <h2>Business task</h2>
-
-      <div class="blue_line snipcss-V6C8f">
-      </div>
-
-      <p>
-      La finalidad de este proyecto es la siguiente: construir un dashboard interactivo con visualizaciones claras y que faciliten la comprensión de la información para los usuarios. 
-      
-     </p>
-      <p>
-        Este dashboard cumplir con lo siguiente: <b>proporcionar un seguimiento de los KPIs clave de la empresa, comparar el desempeño regional, analizar los niveles de tendencia de los productos, contener proyecciones, e identificar clientes de alto valor. </b>
-      </p>
-      <div class="video_section">
-        <div class="video">
-          <img src="images/Business_case4.png" class="bikes2">
-        </div>
-      </div>
-
-      <h2>Sobre la data</h2>
-      <div class="blue_line snipcss-V6C8f">
-      </div>
-      <h4 class="subtitulo">Contexto de la data</h4>
-
-      <ul>
-        <li class="data">
-            <b class="data_context">Quién:</b> 
-            la persona u organización que creó, recolectó y fundo la recolección de datos.
-             <br>
-              -AdventureWorks, LLC
-           
-        </li>
-        <li class="data">
-       
-            <b class="data_context">Qué:</b> 
-             eso en el mundo en lo que la data puede tener un impacto.
-             <br>
-              -La data puede ayudarnos a analizar nuestra data de ventas para permitirnos tomar mejores decisiones y mejorar el servicio que le brindamos a nuestros usuarios.
-             
-        </li>
-
-        <li class="data">
-       
-            <b class="data_context">Dónde:</b> 
-             el orígen de la data.
-             <br>
-              -La data fue proporcionada directamente de AdventureWorks en forma de archivos csv.
-             
-        </li>
-
-        <li class="data">
-       
-            <b class="data_context">Cuándo:</b> 
-             momento en el que la data fue creada o recolectada.
-             <br>
-              -La data es recolectada periodicamente cada mes.
-             
-        </li>
-
-        <li class="data">
-       
-            <b class="data_context">Por qué:</b> 
-             la motivación detrás de la creación y recolección.
-             <br>
-              -Para darle seguimiento a los KPIs claves de la empresa y ajustar adecuadamente la estrategia de negocios.
-             
-        </li>
-
-
-        <li class="data">
-       
-            <b class="data_context">Cómo:</b> 
-             el método utilizado para recolectar la data.
-             <br>
-              -Se recolecta la data cada vez que los clientes hacen transacciones con AdventureWorks.
-             
-        </li>
-
+        <br>
+        <br>
+        <strong>
+          Herramientas utilizadas:
+        </strong>
+        PowerBi, Power Query
 
         
-      </ul>
 
-      
-      <h4 class="subtitulo">Propiedades de la data</h4>
-      Debajo en la imagen se pueden observar algunos de los archivos csv proporcionados junto a las propiedades de datos recolectadas:
-      <br>
-      <br>
-      <div class="video_section">
-        <div class="video">
-          <img src="images/Business_case5.png" class="bikes2">
-        </div>
-      </div>
-
-     
+      </p>
 
 
 
- <h2 class ="title2">Modelo de datos relacional</h2>
 
+
+
+
+
+
+
+
+
+      <h2>Sección 1: Introducción al proyecto</h2>
       <div class="blue_line snipcss-V6C8f">
       </div>
-        
-      <h4 class="subtitulo">Establecimiento de la relación de primary keys y foreign keys</h4>
-      <div class="blue_line6 snipcss-V6C8f">
-      </div>
-
 <br>
-
-      <div class="video_section">
-        <div class="video">
-          <img src="images/Business_Case6.png">
-        </div>
-      </div>
-
-      <br>
-      <b>Metodología de implementación </b>
-      <ul>
-        <li class="data">
-          <b>Identificación de tablas de datos y tablas de búsqueda:</b>
-          Lo primero fue identificar las tablas de datos (AW_Sales y AW_Returns) cuyo contenido es la información granular de los clientes. Luego se definieron las tablas de búsqueda con información descriptiva de cada uno de los atributos de las tablas de datos.
-        </li>
-        <li class="data">
-          <b>Reconocimiento de los primary y foreign keys en las tablas:</b>
-          Se procedió a analizar las tablas de datos y búsqueda para reconocer los primary y foreign keys en cada una de ellas. Se utilizó esta información para establecer las relaciones necesarias entre las tablas y asegurarse de que la data sea coherente y lógica en el modelo de datos relacional.        </li>
-        <li class="data">
-          <b>Establecimiento de las relaciones entre las tablas:</b>
-          Luego de reconocer los primary y foreign keys en las tablas, se establecieron las relaciones necesarias entre ellas. Se utilizó la herramienta de Power BI para establecer las relaciones entre las tablas y asegurarse de que la data sea coherente y lógica en el modelo de datos relacional.  </li>
-    </ul>
-
-
-
-
-
-    <h2 class ="title2">Columnas calculadas y medidas DAX</h2>
-
-      <div class="blue_line snipcss-V6C8f">
-      </div>
-        
-      <h4 class="subtitulo">Creación de nuevas columnas calculadas y medidas DAX</h4>
-      <div class="blue_line7 snipcss-V6C8f">
-      </div>
-
 <br>
+      <h3>Descripción del problema</h3>
+      <div class="blue_line17 snipcss-V6C8f">
+      </div>
+      <p>
+        AdventureWorks, una empresa de fabricación mundial, ha reconocido la importancia del análisis de datos en la toma de decisiones. La compañía requiere una solución de inteligencia empresarial integral para monitorear sus KPIs clave, como ventas, ingresos, ganancias y retornos.
+      </p>
+
+    <p>
+      Se me ha proporcionado un conjunto de archivos CSV sin procesar para diseñar y desarrollar una solución utilizando Power BI.
+      </p>
 
       <div class="video_section">
         <div class="video">
-          <img src="images/Business_case7.png">
+          <img src="images/meme_excel.jpg" class="bikes1">
         </div>
       </div>
 
-      <br>
-      <b>Metodología de implementación </b>
+
+
+      <h3>Objetivo empresarial</h3>
+      <div class="blue_line18 snipcss-V6C8f">
+      </div>
       <p>
-        Después de haber construido el modelo de datos relacional y establecer las relaciones necesarias entre las tablas, se procedió a crear nuevas columnas calculadas y medidas DAX para realizar cálculos y análisis avanzados. Estas nuevas columnas permitieron a los usuarios hacer análisis más profundos y obtener información más detallada de los KPIs de la empresa.     
+        <strong> "Construir un panel interactivo con visualizaciones claras y fáciles de entender que permitan a los usuarios realizar un seguimiento de los KPIs clave, comparar el desempeño regional, analizar tendencias de productos, proyectar resultados e identificar clientes de alto valor." </strong>
        </p>
-        <p>
-          Se utilizaron las funciones adecuadas para cada caso y se validaron los resultados para asegurar su precisión y confiabilidad. La creación de estas nuevas columnas y medidas fue un paso importante para asegurar que los usuarios puedan tomar decisiones informadas y precisas basadas en la data disponible en el modelo de datos relacional.
-                </p>
+
+
+      <div class="video_section">
+        <div class="video">
+          <img src="images/drake-plot.png" class="bikes1">
+        </div>
+      </div>
+
+
+
+
+      <div class="section-separator"></div>
 
 
 
 
 
 
-                <h2 class ="title2">Dashboard en Power Bi</h2>
 
-                <div class="blue_line snipcss-V6C8f">
+    <h2>Sección 2: Descripción de los datos</h2>
+    <div class="blue_line snipcss-V6C8f">
+    </div>
+
+   <p>La data proporcionada por AdventureWorks incluye información sobre transacciones, retornos, productos, clientes y territorios en forma de archivos CSV sin procesar. La data fue recolectada directamente de AdventureWorks y se actualiza periódicamente cada mes. Se utiliza para monitorear los KPIs clave de la empresa y ajustar la estrategia de negocios de manera adecuada.
+
+   </p>
+
+   <h3 class="subtitulo">Tablas de datos proporcianadas</h3>
+   <div class="blue_line46 snipcss-V6C8f">
+  </div>
+  <br>
+   <div class="video_section">
+     <div class="video">
+       <img src="images/Business_case5.png" class="bikes2">
+     </div>
+   </div>
+
+   <h3 class="subtitulo">Establecimiento de la relación de primary keys y foreign keys</h3>
+   <div class="blue_line47 snipcss-V6C8f">
+   </div>
+
+<br>
+
+   <div class="video_section">
+     <div class="video">
+       <img src="images/Business_Case6.png">
+     </div>
+   </div>
+
+   <br>
+
+   <div class="video_section">
+    <div class="video">
+      <img src="images/primary_keys.jpeg">
+    </div>
+  </div>
+
+
+   <div class="section-separator"></div>
+
+   <h2>Sección 4: Construcción del Dasboard</h2>
+   <div class="blue_line snipcss-V6C8f">
+   </div>
+
+  <p>Después de construir el modelo de datos relacional, establecer relaciones entre las tablas y crear columnas calculadas y medidas DAX, se diseñó un reporte interactivo en Power BI. El reporte ofrece visualizaciones claras y comprensibles que permiten a los usuarios analizar profundamente la información y obtener detalles de los KPIs clave de la empresa. 
+
+    <br>
+    <br>
+    El panel interactivo resultante es una herramienta valiosa para la toma de decisiones y permite a los usuarios acceder rápidamente a información relevante y actualizada.
+
+  </p>
+
+
+                <h3 class="subtitulo">Contenido del dashboard</h3>
+
+                <div class="blue_line48 snipcss-V6C8f">
                 </div>
+                <br>
+                El dashboard cuenta con 3 secciones:
+                <ul>
+                  <li class="data">
+                    <b>Resumen ejecutivo</b>
+                                 </li>
+                  <li class="data">
+                    <b>Detalles del producto</b>
                   
-                <h4 class="subtitulo">Diseño de un reporte interactivo Power Bi</h4>
-                <div class="blue_line7 snipcss-V6C8f">
-                </div>
-          
+                    <li class="data">
+                    <b>Detalles del cliente</b>
+          </li>
+
           <br>
           
           <div>
@@ -404,39 +319,16 @@
                 </div>
 
 
-                <br>
 
-                <b>Contenido del dashboard </b>
-                <br>
-                <br>
-                El dashboard cuenta con 3 secciones:
-                <ul>
-                  <li class="data">
-                    <b>Resumen ejecutivo</b>
-                                 </li>
-                  <li class="data">
-                    <b>Detalles del producto</b>
-                  
-                    <li class="data">
-                    <b>Detalles del cliente</b>
-          </li>
+   <div class="section-separator"></div>
 
-              </ul>
+<h2>Sección 5: Conclusión</h2>
+<div class="blue_line snipcss-V6C8f">
+</div>
 
-          
+<p> Este proyecto demuestra cómo se puede utilizar Power BI para desarrollar una solución de inteligencia empresarial integral a partir de un conjunto de archivos CSV sin procesar.</p>
 
-                <p>
-                Después de haber construido el modelo de datos relacional y haber creado nuevas columnas calculadas y medidas DAX, se procedió a diseñar un reporte interactivo en Power BI. Este reporte permitió visualizar la información de una manera más amigable y fácil de entender.
-              </p>
-
-
-                  <p>
-                    Para el diseño del reporte, se utilizaron las mejores prácticas de visualización de datos y se aseguró que el reporte sea intuitivo y fácil de usar. Se incluyeron gráficos y tablas que mostraban los KPIs más importantes de la empresa.
-                  </p>
-
-                  <p>
-                    Además, se aseguró que el reporte sea responsive y pueda ser visualizado en diferentes dispositivos, como computadoras de escritorio, laptops, tablets y smartphones. El reporte interactivo resultante fue una herramienta muy útil para la toma de decisiones y permitió a los usuarios tener acceso a información relevante y actualizada de manera rápida y eficiente.
-                  </p>
+<p>La creación de un panel interactivo con visualizaciones claras y comprensibles permite a los usuarios tomar decisiones informadas y precisas basadas en la data disponible en el modelo de datos relacional. La solución desarrollada ayudará a AdventureWorks a monitorear sus KPIs clave y a mejorar continuamente su estrategia de negocios.</p>
 
 
 
