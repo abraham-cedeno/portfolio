@@ -662,18 +662,17 @@ This method was used to select variables with a greater effect and eliminate mul
 <br>
 
 
-<h3>Multiple linear regression excluding records with a number of insurances equal to 2.</h3>
-<div class="blue_line28 snipcss-V6C8f">
+<h3>K Nearest Neighbor.</h3>
+<div class="blue_line62 snipcss-V6C8f">
 </div>
 
 <br>
 
-Previously, we found that only when the number of insurances is 2 does the relationship between CLV and monthly insurance payment vary immensely and lose its linearity. We suspect that we can significantly improve the model by excluding those records.
-
+Previously, We found that only when number of policies is 2 the relationship between Customer_Lifetime_Value (target value) and Monthly_Premium_Auto (a feature) vary hugely. We suspect that the model could improve it’s accuaracy by trying using an algorithm that could catch this non linear relationship.
 <br>
 <br>
 
-<h4>10-fold cross-validation results </h4>
+<h4>Out-of-sample performance </h4>
 
 <div class="video_section">
   <div class="video">
@@ -681,25 +680,66 @@ Previously, we found that only when the number of insurances is 2 does the relat
   </div>
 </div>
 
-<h4>Residuals absolute value VS predicted value</h4>
+We get a hugely superior model in the holdout sample.
+<br><br>
+
+<h4>Visualizing Observed vs predicted values on holdout sample</h4>
 <div class="video_section">
   <div class="video">
     <img src="images/Findings18.png" class="bikes2">
   </div>
 </div>
 
-<h4>Out-of-sample performance</h4>
+<h3>Setting KNN as feature engine</h3>
+Now let’s try setting KNN as a feature and use it in the multiple linear regression model to see if that could improve the model even further.
+
+<br>
+<br>
+
+<h4>10 fold cross validation model</h4>
 <div class="video_section">
   <div class="video">
     <img src="images/Findings19.png" class="bikes2">
   </div>
 </div>
 
+This is a huge improvement. Now we are talking! But let’s not get ahead of ourselves, is important to check other important factors to validate the model like the VIF and most importantly, assessing the model in the holdout sample.
+
+<br>
+<br>
+
+<h4>Assessing the model on new data (holdout sample)</h4>
+
 <div class="video_section">
   <div class="video">
     <img src="images/Findings20.png" class="bikes2">
   </div>
 </div>
+
+Now this is a very good model with a whooping 0.68131 R-squared in the holdout sample.
+<br>
+<br>
+
+<h4>Visualizing Observed vs predicted values on holdout sample</h4>
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/Findings31.png" class="bikes2">
+  </div>
+</div>
+
+As it can be seen, the model is very accurate in predicting the customer lifetime value.
+<br>
+<br>
+
+<h4>Visualizing the absolute value of the residuals vs the predicted values</h4>
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/Findings32.png" class="bikes2">
+  </div>
+</div>
+
 
 
 
@@ -710,10 +750,11 @@ Previously, we found that only when the number of insurances is 2 does the relat
 <div class="blue_line snipcss-V6C8f">
 </div>
 
-<p>The first model has an RMSE of 6433.889 and an R^2 of 0.1738 out of sample. Although imprecise, the model's coefficients can guide business decisions to increase CLV. The second model improves with an RMSE of 1921.308 and an R^2 of 0.5151. This improvement is due to the identification of atypical behavior in clients with two policies.</p>
+<p>Our initial linear regression model yielded an out-of-sample RMSE of 6433.889 and an R^2 of 0.1738. Although the model's precision was limited, the insights derived from the coefficients can still be used to inform business decisions aimed at increasing CLV. </p>
 
-<p><strong>It is recommended to investigate this behavior</strong> to determine its cause and thus develop an even more accurate model to predict CLV. It is also recommended to implement a strategy to increase customers' monthly insurance payments, as the predictive model shows a strong relationship between both variables.</p>
+<p>The second model significantly improved upon the first by employing an ensemble approach, which incorporated the K Nearest Neighbors (KNN) result as an additional feature. The final model achieved an RMSE of 3994.279 and an R^2 of 0.6813.</p>
 
+<p>The substantial improvement in our model's performance can be attributed to the detection of an unusual pattern among clients holding two policies, which our original linear regression model failed to capture. It is recommended to further investigate this behavior to identify the underlying cause, which may lead to the development of a more accurate model for predicting CLV. </p>
 
 
       </div>

@@ -671,24 +671,27 @@ Este método se utilizó para seleccionar variables con mayor efecto y eliminar 
 
 
 
-<h2>Sección 5: Modelo mejorado</h2>
+<div class="section-separator"></div>
+
+
+
+<h2>Section 5: Modelo mejorado</h2>
 <div class="blue_line snipcss-V6C8f">
 </div>
 <br>
 
 
-<h3>Regresión lineal múltiple excluyendo registros con número de seguros igual a 2.</h3>
-<div class="blue_line28 snipcss-V6C8f">
+<h3>K Nearest Neighbor.</h3>
+<div class="blue_line62 snipcss-V6C8f">
 </div>
 
 <br>
 
-Previamente, encontramos que solo cuando el número de seguros es 2 la relación entre el CLV y el pago mensual del seguro varía inmensamente y pierde su linealidad. Sospechamos que podemos mejorar considerablemente el modelo excluyendo esos records.
-
+Anteriormente, descubrimos que solo cuando el número de pólizas es 2, la relación entre el Valor de por Vida del Cliente (valor objetivo) y la Prima Mensual del Auto (una característica) varía enormemente. Sospechamos que el modelo podría mejorar su precisión utilizando un algoritmo que pueda captar esta relación no lineal.
 <br>
 <br>
 
-<h4>Resultados de validación cruzada 10 fold</h4>
+<h4>Rendimiento fuera de la muestra</h4>
 
 <div class="video_section">
   <div class="video">
@@ -696,19 +699,34 @@ Previamente, encontramos que solo cuando el número de seguros es 2 la relación
   </div>
 </div>
 
-<h4>Valor absoluto de los residuos VS valor predecido</h4>
+Obtenemos un modelo muy superior fuera de muestra.
+<br><br>
+
+<h4>Visualizando los valores observados vs. los valores predichos en la muestra de retención</h4>
 <div class="video_section">
   <div class="video">
     <img src="images/Findings18.png" class="bikes2">
   </div>
 </div>
 
-<h4>Desempeño fuera de muestra</h4>
+<h3>Estableciendo KNN como característica del modelo</h3>
+Ahora intentemos establecer KNN como una característica y usarlo en el modelo de regresión lineal múltiple para ver si eso podría mejorar aún más el modelo.
+
+<br>
+<br>
+
+<h4>Validación cruzada 10 fold</h4>
 <div class="video_section">
   <div class="video">
     <img src="images/Findings19.png" class="bikes2">
   </div>
 </div>
+
+Esta es una gran mejora. ¡Ahora estamos avanzando! Pero no nos adelantemos, lo más importante es que el modelo funcione igual de bien fuera de muestra
+<br>
+<br>
+
+<h4>Evaluando el modelo en nuevos datos (fuera de muestra)</h4>
 
 <div class="video_section">
   <div class="video">
@@ -716,19 +734,45 @@ Previamente, encontramos que solo cuando el número de seguros es 2 la relación
   </div>
 </div>
 
+Ahora este es un modelo muy bueno con un impresionante R-cuadrado de 0.68131 en la muestra de retención.
+<br>
+<br>
+
+<h4>Visualizando los valores observados vs. los valores predecidos fuera de muestra</h4>
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/Findings31.png" class="bikes2">
+  </div>
+</div>
+
+Como se puede ver, el modelo es muy preciso al predecir el valor de por vida del cliente.
+<br>
+<br>
+
+<h4>Visualizando el valor absoluto de los residuos frente a los valores predichos</h4>
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/Findings32.png" class="bikes2">
+  </div>
+</div>
+
+
+
 
 <div class="section-separator"></div>
-
 
 
 <h2>Sección 6: Conclusión</h2>
 <div class="blue_line snipcss-V6C8f">
 </div>
 
-<p>El primer modelo tiene un RMSE de 6433.889 y un R^2 de 0.1738 fuera de muestra. Aunque imprecisos, los coeficientes del modelo pueden guiar decisiones comerciales para aumentar el CLV. El segundo modelo mejora con un RMSE de 1921.308 y un R^2 de 0.5151. Esta mejora se debe a la identificación del comportamiento atípico en clientes con dos pólizas. </p>
+<p>Nuestro modelo inicial de regresión lineal arrojó un RMSE fuera de la muestra de 6433.889 y un R^2 de 0.1738. Aunque la precisión del modelo era limitada, las conclusiones derivadas de los coeficientes aún pueden utilizarse para informar decisiones empresariales encaminadas a aumentar el CLV. </p>
 
-<p><strong>Se recomienda investigar este comportamiento</strong> para determinar su causa y así desarrollar un modelo aún más preciso para predecir el CLV. También se recomienda implementar una estrategia para incrementar el pago mensual de seguros de los clientes, ya que el modelo predictivo muestra una fuerte relación entre ambas variables.</p>
+<p>El segundo modelo mejoró significativamente el primero mediante la adopción de un enfoque de conjunto, que incorporó el resultado de los K Vecinos más Cercanos (KNN) como una característica adicional. El modelo final logró un RMSE de 3994.279 y un R^2 de 0.6813.</p>
 
+<p>La mejora sustancial en el rendimiento de nuestro modelo se atribuye a la detección de un patrón inusual entre los clientes que tienen dos pólizas, que nuestro modelo original de regresión lineal no logró capturar. Se recomienda investigar más a fondo este comportamiento para identificar la causa subyacente, lo que podría llevar al desarrollo de un modelo más preciso para predecir el CLV. </p>
 
 
       </div>
@@ -736,6 +780,9 @@ Previamente, encontramos que solo cuando el número de seguros es 2 la relación
     </div>
   </div>
 </div>
+
+
+
 
 
 
