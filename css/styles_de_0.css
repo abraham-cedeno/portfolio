@@ -408,9 +408,17 @@ left: 30px;
 
                           @media screen and (min-width:392px) and (max-width: 418px) {
                             h1.nombre{
-                              font-size: 1.1rem;
+                              font-size: 0.8rem;
                             }
                             
+                            .about2{
+                              font-size: 4.5rem;
+                            }
+
+                            .about1{
+                              font-size: 1.5rem;
+                            }
+
                             h2.titulo{
                               font-size: 0.5rem;
                             }
@@ -426,7 +434,15 @@ left: 30px;
 /* 352 px minimo*/
                               @media screen and (min-width:100px) and (max-width: 392px) {
                                 h1.nombre{
-                                  font-size: 0.9rem;
+                                  font-size: 0.7rem;
+                                }
+
+                                .about2{
+                                  font-size: 4.0rem;
+                                }
+
+                                .about1{
+                                  font-size: 1.5rem;
                                 }
                                 
                                 h2.titulo{
@@ -1280,3 +1296,5 @@ div.title{
   width: 100%;
   height: 100%;
 }
+
+  
