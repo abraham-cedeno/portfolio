@@ -176,9 +176,28 @@
           Tools used:
         </strong>
         RStudio, Microsoft Excel, Power Query, Tableau
-
-        
       </p>
+
+
+
+      <nav class="toc">
+        <ul>
+          <li><a href="#seccion1">Section 1: Project Introduction</a></li>
+          <li><a href="#seccion2">Section 2: Data Description</a></li>
+          <li><a href="#seccion3">Section 3: Findings - Exploratory Data Analysis</a></li>
+          <li><a href="#seccion4">Section 4: Building the model with Logistic regression</a></li>
+          <li><a href="#seccion5">Section 5: Improving the model with Oversampling</a></li>
+          <li><a href="#seccion6">Section 6: Improving the model with KNN</a></li>
+          <li><a href="#seccion7">Section 7: Conclusion</a></li>
+        </ul>
+      </nav>
+
+
+
+      <div id= "seccion1" class="section-separator"></div>
+
+<br>
+
 
 
 
@@ -216,8 +235,10 @@
 
 
 
-      <div class="section-separator"></div>
+        <div id= "seccion2" class="section-separator"></div>
 
+        <br>
+        
 
 
 
@@ -436,11 +457,13 @@
 
 
 
+         <div id= "seccion3" class="section-separator"></div>
 
-         <div class="section-separator"></div>
+         <br>
+         
 
 
-         <h2>Section 3: Findings</h2>
+         <h2>Section 3: Findings - Exploratory Data Analysis</h2>
          <div class="blue_line snipcss-V6C8f">
          </div>
    <br>
@@ -611,10 +634,13 @@
 
 
 
-   <div class="section-separator"></div>
+   <div id= "seccion4" class="section-separator"></div>
+
+   <br>
+   
 
 
-<h2>Section 4: Classifier Model Construction</h2>
+<h2>Section 4: Building the model with Logistic Regression</h2>
 <div class="blue_line snipcss-V6C8f">
 </div>
 <br>
@@ -711,10 +737,14 @@ The model demonstrates even more satisfactory performance on previously unused d
 
 
 
-<div class="section-separator"></div>
+
+<div id= "seccion5" class="section-separator"></div>
+
+<br>
 
 
-<h2>Section 5: Improved Model</h2>
+
+<h2>Section 5: Improving the model with Oversampling</h2>
 <div class="blue_line snipcss-V6C8f">
 </div>
 <br>
@@ -745,9 +775,139 @@ The improvement provided by oversampling was not significant enough to justify i
 
 
 
-<div class="section-separator"></div>
 
-<h2>Section 6: Conclusion</h2>
+<div id= "seccion6" class="section-separator"></div>
+
+<br>
+
+
+
+
+
+
+
+
+
+
+<h2>Section 6: Improving the model with KNN</h2>
+<div class="blue_line snipcss-V6C8f">
+</div>
+<br>
+
+
+<h3>K Nearest Neighbor.</h3>
+<div class="blue_line62 snipcss-V6C8f">
+</div>
+
+<br>
+
+First let’s try to build a model to catch some non-linear relationships that couldn’t be catch by the logistic regression model.
+<br>
+<br>
+
+<h4>Asses K-nearest neighbors model on Holdout Sample</h4>
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/class1.png" class="bikes2">
+  </div>
+</div>
+
+The results are not as good, but as we know, usually KNN itself is not competitive with more sophisticated classification techniques.
+
+<br><br>
+
+In practical model fitting, however, KNN can be used to add “local knowledge” in a staged process with other classification techniques
+
+Therefore, We’ll add the result of the KNN as a new predictor that could improve the capacity to classify on my model.
+
+<br><br><br>
+
+<h3>Setting KNN as feature engine</h3>
+<div class="blue_line62 snipcss-V6C8f">
+</div>
+<br>
+
+Now let’s try setting KNN as a feature and use it in the multiple linear regression model to see if that could improve the model.
+<br>
+<br>
+
+<h4>10 fold cross validation model</h4>
+<div class="video_section">
+  <div class="video">
+    <img src="images/class2.png" class="bikes2">
+  </div>
+</div>
+
+<h4>Assessing the model Precision, Recall, and Specificity</h4>
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/class3.png" class="bikes2">
+  </div>
+</div>
+
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/class4.png" class="bikes2">
+  </div>
+</div>
+
+While the model’s precision experienced a slight decline from 71% to 69%, the recall increased substantially from 30% to 41%. Additionally, the model’s accuracy improved modestly, rising from 87% to 88.5%.
+<br><br>
+
+<h4>Visualizing the model ROC and AUC</h4>
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/class5.png" class="bikes2">
+  </div>
+</div>
+
+These results indicate that the model has shown some improvement. However, it is crucial to evaluate the model’s performance using out-of-sample data to confirm its effectiveness.
+<br><br>
+
+<h4>Assessing the model on new data (holdout sample)</h4>
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/class6.png" class="bikes2">
+  </div>
+</div>
+
+Regrettably, despite the promising appearance of the modified model, it did not yield any improvement on the holdout sample. Consequently, we have decided to retain the original logistic regression model for our analysis.
+
+<br><br>
+
+<h4>Visualizing Observed vs predicted values on holdout sample</h4>
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/class7.png" class="bikes2">
+  </div>
+</div>
+
+
+
+<div id= "seccion7" class="section-separator"></div>
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Section 7: Conclusion</h2>
 <div class="blue_line snipcss-V6C8f">
 </div>
 
