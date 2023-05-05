@@ -1366,7 +1366,6 @@ body {
 
 
 
-
 .video {
   text-align: center;
 }
@@ -1508,4 +1507,33 @@ tr:nth-child(even) {
   height: 1px;
   background-color: #ccc;
   margin: 40px 0;
+}
+
+
+.toc {
+  width: 100%;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.toc a {
+  display: block;
+  text-decoration: none;
+  color: #333;
+  padding: 5px 0;
+}
+
+.toc a:hover {
+  text-decoration: underline;
+}
+
+.toc li {
+  margin-bottom: 5px;
 }
