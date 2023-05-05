@@ -176,9 +176,30 @@
           Herramientas utilizadas:
         </strong>
         RStudio, Microsoft Excel, Power Query, Tableau
-
-        
       </p>
+
+
+
+      <nav class="toc">
+        <ul>
+          <li><a href="#seccion1">Sección 1: Introducción al proyecto</a></li>
+          <li><a href="#seccion2">Sección 2: Descripción de los datos</a></li>
+          <li><a href="#seccion3">Sección 3: Descubrimientos - Análisis Exploratorio de Datos</a></li>
+          <li><a href="#seccion4">Sección 4: Construcción del modelo con Regresión Logística</a></li>
+          <li><a href="#seccion5">Sección 5: Mejorando el modelo con Sobremuestreo</a></li>
+          <li><a href="#seccion6">Sección 6: Mejorando el modelo con KNN</a></li>
+          <li><a href="#seccion7">Sección 7: Conclusión</a></li>
+        </ul>
+      </nav>
+
+
+
+      <div id= "seccion1" class="section-separator"></div>
+
+<br>
+
+
+
 
 
 
@@ -218,9 +239,9 @@
 
 
 
-      <div class="section-separator"></div>
+       <div id= "seccion2" class="section-separator"></div>
 
-
+       <br>
 
 
 
@@ -438,11 +459,11 @@
 
 
 
+         <div id= "seccion3" class="section-separator"></div>
 
-         <div class="section-separator"></div>
+         <br>
 
-
-         <h2>Sección 3: Descubrimientos</h2>
+         <h2>Sección 3: Descubrimientos - Análisis Exploratorio de Datos</h2>
          <div class="blue_line snipcss-V6C8f">
          </div>
    <br>
@@ -615,10 +636,12 @@
 
 
 
-   <div class="section-separator"></div>
 
+   <div id= "seccion4" class="section-separator"></div>
 
-<h2>Sección 4: Construcción del modelo clasificatorio</h2>
+   <br>
+
+<h2>Sección 4: Construcción del modelo con Regresión Logística</h2>
 <div class="blue_line snipcss-V6C8f">
 </div>
 <br>
@@ -715,10 +738,13 @@ El modelo demuestra un desempeño aún más satisfactorio en datos no utilizados
 
 
 
-<div class="section-separator"></div>
+<div id= "seccion5" class="section-separator"></div>
+
+<br>
 
 
-<h2>Sección 5: Modelo mejorado</h2>
+
+<h2>Sección 5: Mejorando el modelo con Sobremuestreo</h2>
 <div class="blue_line snipcss-V6C8f">
 </div>
 <br>
@@ -749,15 +775,138 @@ La mejora proporcionada por el sobremuestreo no fue lo suficientemente significa
 
 
 
-<div class="section-separator"></div>
 
-<h2>Sección 6: Conclusión</h2>
+<div id= "seccion6" class="section-separator"></div>
+
+<br>
+
+
+
+
+
+
+
+
+<h2>Sección 6: Mejorando el modelo con KNN</h2>
+<div class="blue_line snipcss-V6C8f">
+</div>
+<br>
+
+
+<h3>K Vecinos más Cercanos.</h3>
+<div class="blue_line62 snipcss-V6C8f">
+</div>
+
+<br>
+
+Primero, intentemos construir un modelo para captar algunas relaciones no lineales que no pudieron ser captadas por el modelo de regresión logística.
+<br>
+<br>
+
+<h4>Evaluar el modelo de K vecinos más cercanos fuera de muestra</h4>
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/class1.png" class="bikes2">
+  </div>
+</div>
+
+Los resultados no son tan buenos, pero como sabemos, por lo general, KNN por sí solo no es competitivo con técnicas de clasificación más sofisticadas.
+
+<br><br>
+
+Sin embargo, en la práctica del ajuste del modelo, KNN se puede utilizar para agregar "conocimiento local" en un proceso por etapas con otras técnicas de clasificación. Por lo tanto, agregaremos el resultado de KNN como un nuevo predictor que podría mejorar la capacidad de clasificación en nuestro modelo.
+
+<br><br><br>
+
+<h3>Estableciendo KNN como característica del modelo</h3>
+<div class="blue_line62 snipcss-V6C8f">
+</div>
+<br>
+
+Ahora intentemos establecer KNN como una característica y usarlo en el modelo de regresión lineal múltiple para ver si eso podría mejorar el modelo.
+<br>
+<br>
+
+<h4>Modelo de validación cruzada de 10 pliegues</h4>
+<div class="video_section">
+  <div class="video">
+    <img src="images/class2.png" class="bikes2">
+  </div>
+</div>
+
+<h4>Evaluando la precisión, exhaustividad y especificidad del modelo</h4>
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/class3.png" class="bikes2">
+  </div>
+</div>
+
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/class4.png" class="bikes2">
+  </div>
+</div>
+
+Aunque la precisión del modelo experimentó un ligero descenso del 71% al 69%, la exhaustividad aumentó sustancialmente del 30% al 41%. Además, la precisión del modelo mejoró modestamente, aumentando del 87% al 88.5%.
+<br><br>
+
+<h4>Visualizando la curva ROC y el AUC del modelo</h4>
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/class5.png" class="bikes2">
+  </div>
+</div>
+
+Estos resultados indican que el modelo ha mostrado cierta mejora. Sin embargo, es fundamental evaluar el rendimiento del modelo utilizando datos fuera de la muestra para confirmar su efectividad.
+<br><br>
+
+<h4>Evaluando el modelo en nuevos datos (fuera de muestra)</h4>
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/class6.png" class="bikes2">
+  </div>
+</div>
+
+Lamentablemente, a pesar de la prometedora apariencia del modelo modificado, no produjo ninguna mejora en la muestra de retención. En consecuencia, hemos decidido mantener el modelo original de regresión logística para nuestro análisis.
+
+<br><br>
+
+<h4>Visualizando los valores observados frente a los valores predichos en la muestra de retención</h4>
+
+<div class="video_section">
+  <div class="video">
+    <img src="images/class7.png" class="bikes2">
+  </div>
+</div>
+
+<div id= "seccion7" class="section-separator"></div>
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Sección 7: Conclusión</h2>
 <div class="blue_line snipcss-V6C8f">
 </div>
 
-<p> <strong> El modelo resultante presenta una precisión del 75%, una sensibilidad del 42%, una especificidad del 97%, una exactitud del 89% y un AUC de 0.831. </strong> Este modelo permitirá a la empresa enfocar sus campañas de marketing hacia aquellos clientes con mayor probabilidad de responder positivamente a la nueva campaña. De esta manera, se optimizará la gestión del presupuesto del departamento y se incrementarán las ganancias.</p>
+<p> El modelo resultante tiene una precisión del 75%, sensibilidad del 42%, especificidad del 97%, exactitud del 89% y un AUC de 0.831. Este modelo permitirá a la empresa centrar sus campañas de marketing en aquellos clientes que tienen más probabilidades de responder positivamente a la nueva campaña. Al hacerlo, la gestión del presupuesto del departamento se optimizará y las ganancias aumentarán. </p>
 
-<p>La efectividad del modelo podría mejorarse, especialmente en términos de sensibilidad. Sería aconsejable explorar otras técnicas de modelado, ajustar los parámetros o probar diferentes técnicas de preprocesamiento de datos para mejorar el rendimiento del modelo en esta área.</p>
+<p>La efectividad del modelo podría mejorarse, particularmente en términos de sensibilidad. Sería recomendable explorar otras técnicas de modelado, ajustar parámetros o probar diferentes técnicas de preprocesamiento de datos para mejorar el rendimiento del modelo en esta área.</p>
 
 
 
