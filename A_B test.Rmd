@@ -1,0 +1,659 @@
+---
+title: "A/B Test Analysis on R"
+author: "Abraham Cedeño"
+date: "2023-01-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Section 1: Data preparation (Import, transform, sort and filter)
+***
+
+### Import libraries
+```{r message=FALSE, warning=FALSE, results='hide'}
+library(tidyverse)
+library(stringr)
+library(ggpubr)
+library(knitr)
+```
+
+### Define paths to data sets
+If you don't keep your data in the same directory as the code, adapt the path names.
+```{r}
+dir1 <- "~"
+dir2 <- "Desktop"
+dir3 <- "AC"
+dir4 <- "Useful"
+dir5 <- "Carrer"
+dir6 <- "Skills "
+dir7 <- "3. Skills para trabajo"
+dir8 <- "10. R data science, statistics, machine learning"
+dir9 <- "Portfolio analysis" 
+dir10 <- "2. A:B test" 
+file_name  <- "Data"
+PSDS_PATH <- file.path(dir1, dir2, dir3, dir4, dir5, dir6, dir7, dir8, dir9, dir10, file_name)
+```
+
+### Import csv files as data frames
+```{r, results='hide', message=FALSE, warning=FALSE}
+AB_Test_Results <- read_csv(file.path(PSDS_PATH, 'AB_Test_Results.csv'))
+```
+
+
+### Explore the data frame
+```{r}
+str(AB_Test_Results)
+```
+
+### Sort ascending according to REVENUE, USER_ID and VARIANT
+```{r, results='hide', message=FALSE, warning=FALSE}
+AB_Test_Results<- arrange(AB_Test_Results,REVENUE, USER_ID, VARIANT_NAME)
+```
+
+## Section 2: Data process (clean)
+***
+
+
+### Duplicates
+We start by plotting an histogram to observe if there were any duplicates.
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(AB_Test_Results, aes(x=USER_ID)) + geom_histogram(bins=10000) +
+  theme_bw()+
+  theme(axis.text.x = element_text(hjust = 1,family="Times", face="bold", size=12, color="black"), 
+        axis.title.x = element_text(family="Times", face="bold", size=16, color="black"),
+        axis.text.y = element_text(family="Times", face="bold", size=12, color="black"),
+        axis.title.y = element_text(family="Times", face="bold", size=16, color="black"),
+        strip.text = element_text(size=10, face="bold"),
+        plot.title = element_text(size=20, face="bold"),
+        legend.title = element_blank(),
+        legend.text = element_text(family="Times", color = "black", size = 16,face="bold"),
+        legend.position="right")+
+  scale_x_continuous(limits = c(0, 10000)) +
+  labs(title = "UserID Distribution", y= "Number of Users", x= "User_ID")
+```
+
+We use the function unique to eliminate rows that are completely equal.
+```{r, results='hide', message=FALSE, warning=FALSE}
+Unique_AB_Test_Results<- unique (AB_Test_Results[ , c('USER_ID','VARIANT_NAME','REVENUE') ] )
+```
+
+```{r}
+nrow(Unique_AB_Test_Results)
+```
+
+We are left with 7933 observations(which means that more than 20% of the data were duplicates!).
+
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(Unique_AB_Test_Results, aes(x=USER_ID)) + geom_histogram(bins=10000) +
+  theme_bw()+
+  theme(axis.text.x = element_text(hjust = 1,family="Times", face="bold", size=12, color="black"), 
+        axis.title.x = element_text(family="Times", face="bold", size=16, color="black"),
+        axis.text.y = element_text(family="Times", face="bold", size=12, color="black"),
+        axis.title.y = element_text(family="Times", face="bold", size=16, color="black"),
+        strip.text = element_text(size=10, face="bold"),
+        plot.title = element_text(size=20, face="bold"),
+        legend.title = element_blank(),
+        legend.text = element_text(family="Times", color = "black", size = 16,face="bold"),
+        legend.position="right")+
+  scale_x_continuous(limits = c(0, 10000)) +
+  labs(title = "UserID Distribution", y= "Number of Users", x= "User_ID")
+```
+
+Exploring the data we found that there were users that took part in both of the tests (Example: user ID 3 was in both of the groups). This could mean that the user took the test 2 times with the 2 different variants.
+
+Therefore, to avoid any kind of BIAS, we decided to only keep users that took only 1 of our variations.
+
+We performed a few vectorial calculations to achieve it.
+```{r , results='hide', message=FALSE, warning=FALSE}
+# find rows with duplicated USER_ID and VARIANT_NAME == "control", with additional condition
+dup_rows1 <- duplicated(Unique_AB_Test_Results$USER_ID) & Unique_AB_Test_Results$VARIANT_NAME == "control" &
+  Unique_AB_Test_Results$USER_ID %in% Unique_AB_Test_Results$USER_ID[Unique_AB_Test_Results$VARIANT_NAME == "variant"]
+
+# mark the first occurrence of each duplicate USER_ID as TRUE
+dup_rows1[match(unique(Unique_AB_Test_Results$USER_ID[dup_rows1]), Unique_AB_Test_Results$USER_ID)] <- TRUE
+
+# print the result
+print(dup_rows1)
+num_true1 <- sum(dup_rows1)
+print(num_true1)
+```
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+# find rows with duplicated USER_ID and VARIANT_NAME == "variant", with additional condition
+dup_rows2 <- duplicated(Unique_AB_Test_Results$USER_ID) & Unique_AB_Test_Results$VARIANT_NAME == "variant" &
+  Unique_AB_Test_Results$USER_ID %in% Unique_AB_Test_Results$USER_ID[Unique_AB_Test_Results$VARIANT_NAME == "control"]
+
+# mark the first occurrence of each duplicate USER_ID as TRUE
+dup_rows2[match(unique(Unique_AB_Test_Results$USER_ID[dup_rows2]), Unique_AB_Test_Results$USER_ID)] <- TRUE
+
+# print the result
+print(dup_rows2)
+num_true2 <- sum(dup_rows2)
+print(num_true2)
+```
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+# Perform an OR 
+dup_rows3 <- dup_rows1 | dup_rows2
+
+# Remove the duplicated rows
+One_time_AB_Test_Results <- Unique_AB_Test_Results[!dup_rows3,]
+```
+
+We ended up with 4821 observations.
+
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(One_time_AB_Test_Results, aes(x=USER_ID)) + geom_histogram(bins=10000) +
+  theme_bw()+
+  theme(axis.text.x = element_text(hjust = 1,family="Times", face="bold", size=12, color="black"), 
+        axis.title.x = element_text(family="Times", face="bold", size=16, color="black"),
+        axis.text.y = element_text(family="Times", face="bold", size=12, color="black"),
+        axis.title.y = element_text(family="Times", face="bold", size=16, color="black"),
+        strip.text = element_text(size=10, face="bold"),
+        plot.title = element_text(size=20, face="bold"),
+        legend.title = element_blank(),
+        legend.text = element_text(family="Times", color = "black", size = 16,face="bold"),
+        legend.position="right")+
+  scale_x_continuous(limits = c(0, 10000)) +
+  labs(title = "UserID Distribution", y= "Number of Users", x= "User_ID")
+```
+
+Now, there are still duplicates, but they took the same test, we decided that it makes sense to keep only the observations that bring the highest revenue.
+```{r}
+Max_Revenue_One_time_AB_Test_Results <- One_time_AB_Test_Results %>%
+  group_by(USER_ID) %>%
+  slice(which.max(REVENUE)) %>%
+  ungroup()
+```
+We ended up with 4783 observations.
+
+Then we explore with an histogram again:
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(Max_Revenue_One_time_AB_Test_Results, aes(x=USER_ID)) + geom_histogram(bins=10000) +
+  theme_bw()+
+  theme(axis.text.x = element_text(hjust = 1,family="Times", face="bold", size=12, color="black"), 
+        axis.title.x = element_text(family="Times", face="bold", size=16, color="black"),
+        axis.text.y = element_text(family="Times", face="bold", size=12, color="black"),
+        axis.title.y = element_text(family="Times", face="bold", size=16, color="black"),
+        strip.text = element_text(size=10, face="bold"),
+        plot.title = element_text(size=20, face="bold"),
+        legend.title = element_blank(),
+        legend.text = element_text(family="Times", color = "black", size = 16,face="bold"),
+        legend.position="right")+
+  scale_x_continuous(limits = c(0, 10000)) +
+  labs(title = "UserID Distribution", y= "Number of Users", x= "User_ID")
+```
+
+Our dataframe finally has no duplicates.
+
+### Blanks or mispellings in CHR columns
+```{r}
+max(nchar(Max_Revenue_One_time_AB_Test_Results$VARIANT_NAME))
+min(nchar(Max_Revenue_One_time_AB_Test_Results$VARIANT_NAME))
+```
+The only 2 possibilities are "control" and "variant", both of them have 7 characters, therefore, We can conclude that there are no blanks spaces.
+
+### Ranges of NUM columns 
+```{r}
+max(Max_Revenue_One_time_AB_Test_Results$REVENUE)
+min(Max_Revenue_One_time_AB_Test_Results$REVENUE)
+```
+There are not non expected values (like negative revenues). 
+
+### Filter users by VARIANT_NAME for further analysis
+We decided to filter by variant name so that we could compare both groups in our analysis.
+
+#### Control group
+```{r}
+Control_group_cleaned <- Max_Revenue_One_time_AB_Test_Results %>%
+  group_by(USER_ID) %>%
+  filter(VARIANT_NAME == 'control') %>%
+  ungroup()
+```
+
+#### Variant group
+```{r}
+Variant_group_cleaned <- Max_Revenue_One_time_AB_Test_Results %>%
+  group_by(USER_ID) %>%
+  filter(VARIANT_NAME == 'variant') %>%
+  ungroup()
+```
+
+
+## Section 3: Exploratory Data Analysis
+***
+
+### 1. What’s the distribution that describes the revenue among both the variant and control groups in the study?
+
+We start with a boxplot comparing both variants.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(Max_Revenue_One_time_AB_Test_Results, aes(x=VARIANT_NAME, y=REVENUE)) + 
+  geom_boxplot() +
+  labs(y='Revenue (in usd)') + 
+  theme_bw()
+```
+
+An outlier can be seen in the boxplot, we checked it with the following code:
+
+```{r}
+ Max_Revenue_One_time_AB_Test_Results %>%
+  group_by(USER_ID) %>%
+  arrange(desc(REVENUE)) %>%
+head()
+```
+As it is just one observation of 4745, We decided to exclude it.
+
+```{r}
+Filtered_Max_Revenue_One_time_AB_Test_Results <- Max_Revenue_One_time_AB_Test_Results %>%
+  filter(REVENUE != max(REVENUE))
+```
+
+
+Now We plot the boxplot again but without the outlier.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE }
+ggplot(Filtered_Max_Revenue_One_time_AB_Test_Results, aes(x=VARIANT_NAME, y=REVENUE)) + 
+  geom_boxplot() +
+  labs(y='Revenue (in usd)') + 
+  theme_bw()
+```
+
+
+It shows clearly how the data is distributed, but We thought it would also be benefitial to explore only the observations that bring revenue (revenue >0). So we start by performing a filter.
+
+
+```{r}
+Non_Empty_Filtered_AB_Test_Results <- Filtered_Max_Revenue_One_time_AB_Test_Results %>%
+  filter(REVENUE > 0)
+```
+
+```{r}
+No_max_Control_group_cleaned <- Control_group_cleaned %>%
+  filter(REVENUE != max(REVENUE))
+```
+
+
+```{r}
+Non_Empty_Control_group_cleaned <- Control_group_cleaned %>%
+  filter(REVENUE > 0) %>%
+  filter(REVENUE != max(REVENUE))
+```
+
+```{r}
+Non_Empty_Variant_group_cleaned <- Variant_group_cleaned %>%
+  filter(REVENUE > 0)
+```
+
+
+
+Then, we plot it.
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE }
+ggplot(Non_Empty_Filtered_AB_Test_Results, aes(x=VARIANT_NAME, y=REVENUE, fill=VARIANT_NAME)) + 
+  geom_boxplot() +
+  labs(y='Revenue (in usd)') + 
+  theme_bw()
+```
+
+
+In this boxplot more information about the two groups can be observed:
+
+1. Control group statistics (Interquartile, median, range) are higher than the ones from the variant group.
+
+2. Control group has a higher count of values above the interquartile range.
+
+Also, I decided to plot some histograms to explore further how the revenue is distributed.
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(Non_Empty_Filtered_AB_Test_Results, aes(x=REVENUE,fill=VARIANT_NAME)) + geom_histogram(bins=20, width = 0.75, color="white") +
+  geom_vline(xintercept = 5, linetype = "dashed", alpha = 0.5)+
+  facet_wrap(~VARIANT_NAME)+
+  theme_bw()+
+  theme(axis.text.x = element_text(hjust = 1,family="Times", face="bold", size=12, color="black"), 
+        axis.title.x = element_text(family="Times", face="bold", size=16, color="black"),
+        axis.text.y = element_text(family="Times", face="bold", size=12, color="black"),
+        axis.title.y = element_text(family="Times", face="bold", size=16, color="black"),
+        strip.text = element_text(size=10, face="bold"),
+        plot.title = element_text(size=20, face="bold"),
+        legend.title = element_blank(),
+        legend.text = element_text(family="Times", color = "black", size = 16,face="bold"),
+        legend.position="right")+
+  scale_x_continuous(limits = c(0, 30)) +
+  labs(title = "Revenue Distribution across User Groups", y= "Number of Users", x= "Revenue Brought in (in USD)")
+
+```
+In this histogram we also learned more about how the revenue is distributed among both of the groups. An important observation is that most of the users brought less than $5.
+
+#### Is it normally distributed?
+It can be seen from the histogram that it is not normally distributed, but we decided to make a test to confirm it.
+```{r}
+#We first need to standarized the REVENUE of the control group and then store it as a vector
+Standarized_Revenue_Control_group<- scale(Non_Empty_Control_group_cleaned$REVENUE)
+
+Standarized_Revenue_Variant_group<- scale(Non_Empty_Variant_group_cleaned$REVENUE)
+
+```
+
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+#Then we used the qqnorm function to plot the z values and standard deviations of the vector
+qqnorm(Standarized_Revenue_Control_group, main ="Normal Q-Q plot Control group")
+abline(a=0, b=1, col='grey')
+
+qqnorm(Standarized_Revenue_Variant_group, main ="Normal Q-Q plot Variant group")
+abline(a=0, b=1, col='grey')
+
+```
+
+If the values were close to the line then we could conclude that it is normally distributed, but this is not the case. 
+
+
+### 2. What were the measures of central tendency that describe the revenue for both the variant and control groups in the study? 
+
+#### Control group
+```{r, results='hide'}
+control_mean <- mean(No_max_Control_group_cleaned$REVENUE)
+control_mean
+mean(No_max_Control_group_cleaned$REVENUE, trim=0.1)
+median(No_max_Control_group_cleaned$REVENUE)
+```
+
+#### Variant group
+```{r, results='hide'}
+variant_mean <- mean(Variant_group_cleaned$REVENUE)
+variant_mean
+mean(Variant_group_cleaned$REVENUE, trim=0.1)
+median(Variant_group_cleaned$REVENUE)
+```
+#### Control group, revenue > 0
+```{r, results='hide'}
+mean(Non_Empty_Control_group_cleaned$REVENUE)
+mean(Non_Empty_Control_group_cleaned$REVENUE, trim=0.1)
+median(Non_Empty_Control_group_cleaned$REVENUE)
+```
+
+#### Variant group, revenue > 0
+```{r, results='hide'}
+mean(Non_Empty_Variant_group_cleaned$REVENUE)
+mean(Non_Empty_Variant_group_cleaned$REVENUE, trim=0.1)
+median(Non_Empty_Variant_group_cleaned$REVENUE)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+summary_stats <- data.frame(
+  Group = c("Control", "Variant", "Control, Revenue > 0", "Variant, Revenue >0"),
+  Mean = c(mean(No_max_Control_group_cleaned$REVENUE),
+           mean(Variant_group_cleaned$REVENUE),mean(Non_Empty_Control_group_cleaned$REVENUE),mean(Non_Empty_Variant_group_cleaned$REVENUE) ),
+  Trimmed_Mean = c(mean(No_max_Control_group_cleaned$REVENUE, trim=0.1),
+                   mean(Variant_group_cleaned$REVENUE, trim=0.1), mean(Non_Empty_Control_group_cleaned$REVENUE, trim=0.1),mean(Non_Empty_Variant_group_cleaned$REVENUE, trim=0.1)),
+  Median = c(median(No_max_Control_group_cleaned$REVENUE),
+             median(Variant_group_cleaned$REVENUE), median(Non_Empty_Control_group_cleaned$REVENUE), median(Non_Empty_Variant_group_cleaned$REVENUE))
+)
+```
+
+```{r, , echo=FALSE, message=FALSE, warning=FALSE}
+kable(summary_stats, caption = "Summary - Measures of Central Tendency for Revenue by Group")
+```
+
+
+### 3.What were the measures of dispersion that describe the revenue for both the variant and control groups in the study? 
+
+#### Control group
+```{r, results='hide'}
+range(No_max_Control_group_cleaned$REVENUE)
+sd(No_max_Control_group_cleaned$REVENUE)
+IQR(No_max_Control_group_cleaned$REVENUE)
+mad(No_max_Control_group_cleaned$REVENUE)
+```
+
+#### Variant group
+```{r, results='hide'}
+range(Variant_group_cleaned$REVENUE)
+sd(Variant_group_cleaned$REVENUE)
+IQR(Variant_group_cleaned$REVENUE)
+mad(Variant_group_cleaned$REVENUE)
+```
+
+#### Control group, revenue > 0
+```{r, results='hide'}
+range(Non_Empty_Control_group_cleaned$REVENUE)
+sd(Non_Empty_Control_group_cleaned$REVENUE)
+IQR(Non_Empty_Control_group_cleaned$REVENUE)
+mad(Non_Empty_Control_group_cleaned$REVENUE)
+```
+
+
+#### Variant group, revenue > 0
+```{r, results='hide'}
+range(Non_Empty_Variant_group_cleaned$REVENUE)
+sd(Non_Empty_Variant_group_cleaned$REVENUE)
+IQR(Non_Empty_Variant_group_cleaned$REVENUE)
+mad(Non_Empty_Variant_group_cleaned$REVENUE)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+summary_stats2 <- data.frame(
+  Group = c("Control", "Variant", "Control, Revenue > 0", "Variant, Revenue >0"),
+  Range = c(paste(range(No_max_Control_group_cleaned$REVENUE), collapse = "-"),
+            paste(range(Variant_group_cleaned$REVENUE), collapse = "-"),
+            paste(range(Non_Empty_Control_group_cleaned$REVENUE), collapse = "-"),
+            paste(range(Non_Empty_Variant_group_cleaned$REVENUE), collapse = "-")),
+  Standard_Deviation = c(sd(No_max_Control_group_cleaned$REVENUE),
+                   sd(Variant_group_cleaned$REVENUE), sd(Non_Empty_Control_group_cleaned$REVENUE), sd(Non_Empty_Variant_group_cleaned$REVENUE)),
+  Interquartile_range = c(IQR(No_max_Control_group_cleaned$REVENUE),
+             IQR(Variant_group_cleaned$REVENUE), IQR(Non_Empty_Control_group_cleaned$REVENUE), IQR(Non_Empty_Variant_group_cleaned$REVENUE)),
+  Median_absolute_deviation = c(mad(No_max_Control_group_cleaned$REVENUE),
+             mad(Variant_group_cleaned$REVENUE), mad(Non_Empty_Control_group_cleaned$REVENUE), mad(Non_Empty_Variant_group_cleaned$REVENUE))
+)
+```
+
+```{r, , echo=FALSE, message=FALSE, warning=FALSE}
+kable(summary_stats2, caption = "Summary - Measures of Dispersion for Revenue by Group")
+```
+
+
+
+
+### 4. What are some of the percentiles of revenue for both the variant and control groups in the study?
+
+#### Control group
+```{r}
+quantile(No_max_Control_group_cleaned$REVENUE, p=c(.05, .25, .5, .75, .95, .99))
+```
+
+#### Variant group
+```{r}
+quantile(Variant_group_cleaned$REVENUE, p=c(.05, .25, .5, .75, .95, .99))
+```
+#### Control group, revenue > 0
+```{r}
+quantile(Non_Empty_Control_group_cleaned$REVENUE, p=c(.05, .25, .5, .75, .95, .99))
+```
+
+#### Variant group, revenue > 0
+```{r}
+quantile(Non_Empty_Variant_group_cleaned$REVENUE, p=c(.05, .25, .5, .75, .95, .99))
+```
+
+
+
+## Section 4: Statistical Analysis
+***
+
+### 5. What is the estimate of the standard error of revenue for both the variant and control groups in the study?
+
+In order to estimate the standard error we decided to use the bootstrap method.
+
+#### Standard error - Control Group
+```{r}
+library(boot)
+stat_fun_control <- function(x, idx) mean(x[idx])
+boot_obj_control <- boot(No_max_Control_group_cleaned$REVENUE, R=1000, statistic=stat_fun_control)
+boot_obj_control
+
+```
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#Store the standard error for further use
+std_error_control <- sd(boot_obj_control$t)
+
+#Create a vector with one interval of 1 standard error from the mean.
+std_error_control_vector <- c(control_mean-std_error_control,control_mean+std_error_control)
+
+#Create a data frame with one interval of 1 standard error from the mean.
+std_error_control_frame <- data.frame(std_error_control_frame=std_error_control_vector, y=c(53, 57))
+```
+
+It can be observed that the original mean is 0.1149226 and the estimate for the standard error is 0.02295401. Also there is a very low bias which means that we can have very high confidence in the estimate of the standard error.
+
+#### Standard error - Variant Group
+```{r}
+stat_fun_variant <- function(x, idx) mean(x[idx])
+boot_obj_variant <- boot(Variant_group_cleaned$REVENUE, R=1000, statistic=stat_fun_variant)
+boot_obj_variant
+
+```
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#Store the standard error for further use
+std_error_variant <- sd(boot_obj_variant$t)
+
+#Create a vector with one interval of 1 standard error from the mean.
+std_error_variant_vector <- c(variant_mean-std_error_variant,variant_mean+std_error_variant)
+
+#Create a data frame with one interval of 1 standard error from the mean.
+std_error_variant_frame <- data.frame(std_error_variant_frame=std_error_variant_vector, y=c(53, 57))
+```
+
+
+It can be observed that the original mean is 0.07441287 and the estimate for the standard error is 0.01751985. Also there is a very low bias which means that we can have very high confidence in the estimate of the standard error.
+
+
+### 6. What are the 95% confidence interval of revenue for both the variant and control groups in the study?
+
+#### 95% interval - Control Group
+```{r}
+boot_ci_control <- boot.ci(boot_obj_control, conf=0.95, type='basic')
+X_control <- data.frame(mean=boot_obj_control$t)
+ci90_control <- boot_ci_control$basic[4:5]
+ci_control <- data.frame(ci_control=ci90_control, y=c(8, 12))
+ci_control
+```
+
+```{r, , echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(X_control, aes(x=mean)) +
+    geom_histogram(bins=40, fill='#F8766D') +
+    geom_vline(xintercept=control_mean, linetype=2) +
+    geom_path(aes(x=std_error_control_frame, y=55), data=std_error_control_frame, size=2) +
+    geom_path(aes(x=std_error_control_vector[1], y=y), data=std_error_control_frame, size=2) +
+    geom_path(aes(x=std_error_control_vector[2], y=y), data=std_error_control_frame, size=2) +
+    geom_text(aes(x=control_mean, y=50, label='1 standard error'), size=6) +
+
+  
+  geom_path(aes(x=ci_control, y=10), data=ci_control, size=2) +
+    geom_path(aes(x=ci90_control[1], y=y), data=ci_control, size=2) +
+    geom_path(aes(x=ci90_control[2], y=y), data=ci_control, size=2) +
+    geom_text(aes(x=control_mean, y=30, label='Control group mean'), size=6) +
+    geom_text(aes(x=control_mean, y=6, label='95% confidence interval'), size=6) +
+  
+  
+  
+  theme_bw() + 
+    labs(title = "95% Confidence Interval for mean by Control Group",x='Mean samples', y='Counts')
+```
+
+
+#### 95% interval - Variant Group
+```{r}
+boot_ci_variant <- boot.ci(boot_obj_variant, conf=0.95, type='basic')
+X_variant <- data.frame(mean=boot_obj_variant$t)
+ci90_variant <- boot_ci_variant$basic[4:5]
+ci_variant <- data.frame(ci_variant=ci90_variant, y=c(8, 12))
+ci_variant
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(X_variant, aes(x=mean)) +
+    geom_histogram(bins=40, fill='#00BFC4') +
+    geom_vline(xintercept=variant_mean, linetype=2) +
+  
+  
+      geom_path(aes(x=std_error_variant_frame, y=55), data=std_error_variant_frame, size=2) +
+    geom_path(aes(x=std_error_variant_vector[1], y=y), data=std_error_variant_frame, size=2) +
+    geom_path(aes(x=std_error_variant_vector[2], y=y), data=std_error_variant_frame, size=2) +
+    geom_text(aes(x=variant_mean, y=50, label='1 standard error'), size=6) +
+
+  
+  
+  
+    geom_path(aes(x=ci_variant, y=10), data=ci_variant, size=2) +
+    geom_path(aes(x=ci90_variant[1], y=y), data=ci_variant, size=2) +
+    geom_path(aes(x=ci90_variant[2], y=y), data=ci_variant, size=2) +
+    geom_text(aes(x=variant_mean, y=30, label='Variant group mean'), size=6) +
+    geom_text(aes(x=variant_mean, y=6, label='95% Confidence Interval'), size=6) +
+    theme_bw() + 
+    labs(title = "95% Confidence Interval for mean by Variant Group",x='Mean samples', y='Counts')
+```
+
+#### Comparison between the two groups sample statistic
+
+Then we plot the density curves of both groups to see if they overlap:
+
+```{r}
+ggplot() +
+  stat_density(data = X_control, aes(x = mean, group = 1, fill = "Control"), alpha = 0.5) +
+  stat_density(data = X_variant, aes(x = mean, group = 1, fill = "Variant"), alpha = 0.5) +
+  geom_vline(data = X_control, aes(xintercept = control_mean), linetype = 2, color = "#F8766D") +
+  geom_vline(data = X_variant, aes(xintercept = variant_mean), linetype = 2, color = "#00BFC4") +
+  theme_bw() +
+  labs(title = "Density curve of both groups", x = "Mean samples", y = "Density", fill = "") +
+  scale_fill_manual(values = c("#F8766D", "#00BFC4"), labels = c("Control", "Variant"))
+```
+
+As it is noticed, their confidence intervals do overlap, therefore, no conclusions can be made about wether the control group bring more revenue.
+
+What we can test to determine if the control group brings more revenue than the variant group is to find out if the difference between the means is statistical significant.
+
+### 7. Is the difference between a statistic (mean or median) of both groups statistically significant?
+```{r}
+mean_diff <- control_mean-variant_mean
+mean_diff
+```
+#### Permutation test
+The question is whether this difference is within the range of what random chance might produce. 
+
+One way to answer this is to apply a permutation test, combine all the revenues together and then repeatedly shuffle and divide them into groups of 2389 (recall tha n=2389 for control group) and a group of 2393 (recall tha n=2393 for variant group).
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+perm_fun <- function(x, nA, nB)
+{
+  n <- nA + nB
+  idx_b <- sample(1:n, nB)
+  idx_a <- setdiff(1:n, idx_b)
+  mean_diff <- mean(x[idx_b]) - mean(x[idx_a])
+  return(mean_diff)
+}
+```
+
+```{r}
+set.seed(1)
+perm_diffs <- rep(0, 1000)
+for (i in 1:1000) {
+  perm_diffs[i] = perm_fun(Filtered_Max_Revenue_One_time_AB_Test_Results$REVENUE, 2389, 2393)
+}
+par(mar=c(4,4,1,0)+.1)
+hist(perm_diffs, xlab='Revenue brought differences (USD)', main='')
+abline(v=control_mean - variant_mean, lty=2, lwd=1.5)
+text('  Observed\n  difference', x=control_mean - variant_mean,  y=par()$usr[4]-20, adj=0)
+
+mean(perm_diffs > (control_mean - variant_mean))
+```
+The histogram, shows that mean difference of random permutations often exceeds the observed difference in revenue brought (the vertical line). For our results, this happens in 8.2% of the cases.
+
+
+## Section 5: Conclusion
+As p-value chosen was 5%, the results suggest that the observed difference in revenue generated between the control group and variation group is well within the range of chance variation and thus is not statistically significant.
+
+
